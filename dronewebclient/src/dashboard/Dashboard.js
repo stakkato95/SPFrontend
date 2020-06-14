@@ -25,6 +25,7 @@ import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import { withRouter, Route, Switch } from 'react-router-dom';
 
 import Drones from './Drones';
+import Session from './Session';
 
 
 function Copyright() {
@@ -209,7 +210,7 @@ function Dashboard(props) {
         {/* <Drones/> */}
           <Switch>
             <Route exact from="/" render={props => <Drones {...props} />} />
-            <Route exact path="/session" render={props => <Drones {...props} />} />
+            <Route exact path="/session" render={props => <Session {...props} />} />
             <Route exact path="/history" render={props => <Drones {...props} />} />
           </Switch>
           {/* <Box pt={4}>
