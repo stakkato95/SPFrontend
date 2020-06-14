@@ -21,7 +21,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import { Contactless, SettingsEthernet, History } from '@material-ui/icons';
 import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 
-import { withRouter, Route, Switch } from 'react-router-dom';
+import { withRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 import Drones from './drones/Drones';
 import Session from './Session';
@@ -140,7 +140,7 @@ function Dashboard(props) {
     {
       text: 'Drones',
       icon: <Contactless />,
-      onClick: () => history.push('/')
+      onClick: () => history.push('/drones')
     },
     {
       text: 'Session',
@@ -207,7 +207,9 @@ function Dashboard(props) {
         <Container maxWidth="lg" className={classes.container}>
         {/* <Drones/> */}
           <Switch>
-            <Route exact from="/" render={props => <Drones {...props} />} />
+            <Redirect exact from="/" to="/drones" />
+
+            <Route exact from="/drones/:tab?" render={props => <Drones {...props} />} />
             <Route exact path="/session" render={props => <Session {...props} />} />
             <Route exact path="/history" render={props => <Drones {...props} />} />
           </Switch>

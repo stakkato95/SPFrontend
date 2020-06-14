@@ -13,16 +13,29 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Drones(props) {
-  const classes = useStyles();
-  const [selectedTab, setSelectedTab] = React.useState(0);
+  const REGISTERED = 'registered';
+  const UNREGISTERED = 'unregistered';
 
+  const classes = useStyles();
+  const { match, history } = props;
+
+  const tabUrl = match.params.tab || REGISTERED;
+  const tabToIndex = {
+    [REGISTERED] : 0,
+    [UNREGISTERED] : 1
+  };
+  const indexToTab = {
+    0 : REGISTERED,
+    1 : UNREGISTERED
+  };
+
+  const DEFAULT_OPEN_TAB = 0;
+  const [selectedTab, setSelectedTab] = React.useState(tabToIndex[tabUrl]);
   const handleChange = (event, newValue) => {
+    history.push(`/drones/${indexToTab[newValue]}`);
     setSelectedTab(newValue);
   };
-
-  const handleChangeIndex = (index) => {
-    setSelectedTab(index);
-  };
+  const handleChangeIndex = index => setSelectedTab(index);
 
   return (
     <div className={classes.root}>
