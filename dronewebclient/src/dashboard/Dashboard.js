@@ -23,7 +23,7 @@ import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 
 import { withRouter, Route, Switch } from 'react-router-dom';
 
-import Drones from './Drones';
+import Drones from './drones/Drones';
 import Session from './Session';
 
 
