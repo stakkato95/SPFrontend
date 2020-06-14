@@ -23,6 +23,11 @@ import { MainListItems, SecondaryListItems } from './ListItems';
 // import Deposits from './Deposits';
 // import Orders from './Orders';
 
+import { ContactlessIcon, SettingsEthernetIcon, HistoryIcon } from '@material-ui/icons';
+
+import { withRouter } from 'react-router-dom';
+
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -117,16 +122,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Dashboard() {
+function Dashboard() {
   const classes = useStyles();
+
   const [open, setOpen] = React.useState(true);
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
+
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
+  // const itemsList = {
+  //   { text: '', icon:  }
+  // };
 
   return (
     <div className={classes.root}>
@@ -143,7 +156,7 @@ export default function Dashboard() {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Dashboard
+            Skynetz
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
@@ -200,3 +213,5 @@ export default function Dashboard() {
     </div>
   );
 }
+
+export default withRouter(Dashboard);
