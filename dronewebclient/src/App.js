@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { SearchAppBar } from './SearchAppBar'
+import Dashboard from './Dashboard'
 
 function App() {
   return (
     <div>
-      <SearchAppBar/>
+      <Dashboard/>
     </div>
   );
 }
