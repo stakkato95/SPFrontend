@@ -1,6 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/styles';
 
 import PropTypes from 'prop-types';
@@ -10,12 +8,6 @@ import { connect } from 'react-redux';
 import { getUnregisteredDrones } from '../../redux/DroneActions'
 
 import UnregisteredListItem from './list/UnregisteredListItem';
-
-// const tableStyles = makeStyles({
-//   table: {
-//       marginTop: '16px'
-//   },
-// });
 
 const styles = theme => ({
   table: {
