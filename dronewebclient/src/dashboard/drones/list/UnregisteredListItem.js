@@ -1,18 +1,23 @@
 import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { Box, Collapse, TableCell, TableRow, Typography, IconButton } from '@material-ui/core';
-import { KeyboardArrowDown, KeyboardArrowUp } from '@material-ui/icons';
+import { Box, Collapse, Typography, IconButton, Button, Paper } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
+import { KeyboardArrowDown, KeyboardArrowUp, Add } from '@material-ui/icons';
 
-import { UnregisteredDrone } from '../../../model/UnregisteredDrone';
-
-const useRowStyles = makeStyles({
+const useRowStyles = makeStyles((theme) => ({
     root: {
         '& > *': {
             borderBottom: 'unset',
         },
     },
-});
+    button: {
+        margin: theme.spacing(1),
+    },
+    table: {
+        maxWidth: 200
+    }
+}));
 
 function UnregisteredListItem(props) {
     const { row } = props;
@@ -37,7 +42,42 @@ function UnregisteredListItem(props) {
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box margin={1}>
-                            <Typography variant="h6" gutterBottom component="div">History</Typography>
+                            <Typography variant="h6" gutterBottom component="div">
+                                Additional information
+                            </Typography>
+                                <Table className={classes.table} size="small" aria-label="a dense table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell>Parameter</TableCell>
+                                            <TableCell align="right">Value</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        <TableRow key="id">
+                                            <TableCell component="th" scope="row">Id</TableCell>
+                                            <TableCell align="right">{row.id}</TableCell>
+                                        </TableRow>
+                                        <TableRow key="ip">
+                                            <TableCell component="th" scope="row">IP</TableCell>
+                                            <TableCell align="right">{row.ip}</TableCell>
+                                        </TableRow>
+                                        <TableRow key="lat">
+                                            <TableCell component="th" scope="row">Latitude</TableCell>
+                                            <TableCell align="right">{row.position.lat}</TableCell>
+                                        </TableRow>
+                                        <TableRow key="lon">
+                                            <TableCell component="th" scope="row">Longitude</TableCell>
+                                            <TableCell align="right">{row.position.lon}</TableCell>
+                                        </TableRow>
+                                        <TableRow key="alt">
+                                            <TableCell component="th" scope="row">Altitude</TableCell>
+                                            <TableCell align="right">{row.position.alt}</TableCell>
+                                        </TableRow>
+                                    </TableBody>
+                                </Table>
+                            <Box display="flex" flexDirection="row-reverse">
+                                <Button variant="contained" color="primary" className={classes.button} endIcon={<Add />}>Register</Button>
+                            </Box>
                         </Box>
                     </Collapse>
                 </TableCell>
