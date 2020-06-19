@@ -25,7 +25,7 @@ const styles = theme => ({
     marginTop: '8px'
   },
   container: {
-    padding: '0px',
+    padding: '2px',
     position: 'relative'
   }
 });
