@@ -1,10 +1,11 @@
-import { 
-    SET_REGISTERED_DRONES, 
-    SET_UNREGISTERED_DRONES, 
+import {
+    SET_REGISTERED_DRONES,
+    SET_UNREGISTERED_DRONES,
     SET_NEW_DRONE_NAME,
     SET_NEW_DRONE_AUTO_SESSION_START,
     SET_NEW_REGISTERED_DRONE,
-    SET_REGISTER_DRONE_DIALOG_VISIBLE
+    SET_REGISTER_DRONE_DIALOG_VISIBLE,
+    SET_SELECTED_UNREGISTERED_DRONE_ID
 } from './DroneActions';
 
 export const initialState = {
@@ -28,7 +29,13 @@ export const Reducer = (state = initialState, action) => {
         case SET_NEW_DRONE_AUTO_SESSION_START:
             return Object.assign({}, state, { newDroneSessionAutoStart: action.newDroneSessionAutoStart });
         case SET_REGISTER_DRONE_DIALOG_VISIBLE:
-            return Object.assign({}, state, { isRegisterDroneDialogVisible: action.isRegisterDroneDialogVisible });
+            let stateUpdate = { isRegisterDroneDialogVisible: action.isRegisterDroneDialogVisible };
+            if (!action.isRegisterDroneDialogVisible) {
+                stateUpdate.selectedUnregisteredDroneId = '';
+            }
+            return Object.assign({}, state, stateUpdate);
+        case SET_SELECTED_UNREGISTERED_DRONE_ID:
+            return Object.assign({}, state, { selectedUnregisteredDroneId: action.selectedUnregisteredDroneId });
         case SET_NEW_REGISTERED_DRONE:
             let unregisteredDrones = state.unregisteredDrones.slice();
             unregisteredDrones = unregisteredDrones.filter(obj => obj.id !== action.unregisteredDroneId);
@@ -36,7 +43,10 @@ export const Reducer = (state = initialState, action) => {
             let registeredDrones = state.registeredDrones.slice();
             registeredDrones.push(action.newDrone);
 
-            return Object.assign({}, state, { unregisteredDrones: unregisteredDrones, registeredDrones: registeredDrones });
+            return Object.assign({}, state, {
+                unregisteredDrones: unregisteredDrones,
+                registeredDrones: registeredDrones
+            });
     }
     return state;
 };

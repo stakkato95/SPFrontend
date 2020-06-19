@@ -7,7 +7,10 @@ import { KeyboardArrowDown, KeyboardArrowUp, Add } from '@material-ui/icons';
 
 import { connect } from 'react-redux';
 
-import { setRegisterDroneDialogVisible } from '../../../redux/DroneActions';
+import { 
+    setRegisterDroneDialogVisible, 
+    setSelectedUnregisteredDroneId
+} from '../../../redux/DroneActions';
 
 import RegisterDroneDialog from '../RegisterDroneDialog'
 
@@ -88,7 +91,10 @@ function UnregisteredListItem(props) {
                                     color="primary" 
                                     className={classes.button} 
                                     endIcon={<Add />}
-                                    onClick={() => props.setRegisterDroneDialogVisible(true)}>Register</Button>
+                                    onClick={() => {
+                                        props.setRegisterDroneDialogVisible(true);
+                                        props.setSelectedUnregisteredDroneId(row.id);
+                                    }}>Register</Button>
                                 <RegisterDroneDialog />
                             </Box>
                         </Box>
@@ -99,6 +105,6 @@ function UnregisteredListItem(props) {
     );
 }
 
-const mapDispatchToProps = { setRegisterDroneDialogVisible };
+const mapDispatchToProps = { setRegisterDroneDialogVisible, setSelectedUnregisteredDroneId };
 
 export default connect(null, mapDispatchToProps)(UnregisteredListItem);
