@@ -10,22 +10,18 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 class RegisterDroneDialog extends React.Component {
 
     render() {
-        const [open, setOpen] = React.useState(false);
-
-        const handleClickOpen = () => {
-            setOpen(true);
+        const handleCancel = () => {
+            this.props.setDialogOpen(false)
         };
-        //TODO move drones saga to drones package
-        //TODO add dialog state to drone saga and reducer
 
-        const handleClose = () => {
-            setOpen(false);
+        const handleRegister = () => {
+            this.props.setDialogOpen(false)
         };
 
         return (
             <div>
-                <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                    <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+                <Dialog open={this.props.dialogOpen}>
+                    <DialogTitle id="form-dialog-title">Register a new drone</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
                             To subscribe to this website, please enter your email address here. We will send updates
@@ -34,8 +30,8 @@ class RegisterDroneDialog extends React.Component {
                         <TextField autoFocus margin="dense" id="name" label="Email Address" type="text" fullWidth />
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleClose} color="primary">Cancel</Button>
-                        <Button onClick={handleClose} color="primary">Subscribe</Button>
+                        <Button onClick={handleCancel} color="primary">Cancel</Button>
+                        <Button onClick={handleRegister} color="primary">Register</Button>
                     </DialogActions>
                 </Dialog>
             </div>

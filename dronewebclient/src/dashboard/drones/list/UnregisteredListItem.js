@@ -1,9 +1,11 @@
 import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { Box, Collapse, Typography, IconButton, Button, Paper } from '@material-ui/core';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
+import { Box, Collapse, Typography, IconButton, Button } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import { KeyboardArrowDown, KeyboardArrowUp, Add } from '@material-ui/icons';
+
+import RegisterDroneDialog from '../RegisterDroneDialog'
 
 const useRowStyles = makeStyles((theme) => ({
     root: {
@@ -21,15 +23,17 @@ const useRowStyles = makeStyles((theme) => ({
 
 function UnregisteredListItem(props) {
     const { row } = props;
-    const [open, setOpen] = React.useState(false);
+    const [expanded, setExpanded] = React.useState(false);
+    const [dialogOpen, setDialogOpen] = React.useState(false);
+
     const classes = useRowStyles();
 
     return (
         <React.Fragment>
             <TableRow className={classes.root}>
                 <TableCell>
-                    <IconButton size="small" onClick={() => setOpen(!open)}>
-                        {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
+                    <IconButton size="small" onClick={() => setExpanded(!expanded)}>
+                        {expanded ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
                     </IconButton>
                 </TableCell>
                 <TableCell component="th" scope="row">{row.id}</TableCell>
@@ -40,7 +44,7 @@ function UnregisteredListItem(props) {
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                    <Collapse in={open} timeout="auto" unmountOnExit>
+                    <Collapse in={expanded} timeout="auto" unmountOnExit>
                         <Box margin={1}>
                             <Typography variant="h6" gutterBottom component="div">
                                 Additional information
@@ -76,7 +80,13 @@ function UnregisteredListItem(props) {
                                     </TableBody>
                                 </Table>
                             <Box display="flex" flexDirection="row-reverse">
-                                <Button variant="contained" color="primary" className={classes.button} endIcon={<Add />}>Register</Button>
+                                <Button 
+                                    variant="contained" 
+                                    color="primary" 
+                                    className={classes.button} 
+                                    endIcon={<Add />}
+                                    onClick={() => setDialogOpen(true)}>Register</Button>
+                                <RegisterDroneDialog dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} />
                             </Box>
                         </Box>
                     </Collapse>
