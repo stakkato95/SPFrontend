@@ -39,23 +39,12 @@ class UnregisteredDrones extends React.Component {
   render() {
     const { classes } = this.props;
 
-    //TODO EMPTY STATE
-    //TODO EMPTY STATE
-    //TODO EMPTY STATE
-    //TODO EMPTY STATE
-    //TODO EMPTY STATE
-    //TODO EMPTY STATE
-    //TODO EMPTY STATE
-    //TODO EMPTY STATE
-    //TODO EMPTY STATE
-    //TODO EMPTY STATE
-
     return (<Container className={classes.container} >
       <TableContainer
         component={Paper}
         className={classes.table}
         style={{ display: this.props.unregisteredDrones.length !== 0 ? 'block' : 'none' }}>
-        <Table aria-label="collapsible table">
+        <Table>
           <TableHead>
             <TableRow>
               <TableCell />

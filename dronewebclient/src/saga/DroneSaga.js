@@ -16,7 +16,14 @@ import { GET_REGISTERED_DRONES, GET_UNREGISTERED_DRONES, REGISTER_DRONE } from '
 function* getRegistered() {
     try {
         var serverResult = yield axios.get('http://localhost:8080/api/drone/getAllRegistered');
-        // yield put(setRegisteredDrones(serverResult.data));
+        serverResult.data.forEach(e => {
+            e.showUpTime = new Date(e.showUpTime).toLocaleString();
+            e.registrationTime = new Date(e.registrationTime).toLocaleString();
+            e.lastConnectionTime = new Date(e.lastConnectionTime).toLocaleString();
+            e.lastSeenTime = new Date(e.lastSeenTime).toLocaleString();
+        });
+        console.log(serverResult.data);
+        yield put(setRegisteredDrones(serverResult.data));
     } catch (e) {
         console.log(e);
         //ignore
