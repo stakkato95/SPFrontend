@@ -5,7 +5,8 @@ import {
     SET_NEW_DRONE_AUTO_SESSION_START,
     SET_NEW_REGISTERED_DRONE,
     SET_REGISTER_DRONE_DIALOG_VISIBLE,
-    SET_SELECTED_UNREGISTERED_DRONE_ID
+    SET_SELECTED_UNREGISTERED_DRONE_ID,
+    SET_DRONE_REGISTRATION_IN_PROGRESS
 } from './DroneActions';
 
 export const initialState = {
@@ -32,10 +33,14 @@ export const Reducer = (state = initialState, action) => {
             let stateUpdate = { isRegisterDroneDialogVisible: action.isRegisterDroneDialogVisible };
             if (!action.isRegisterDroneDialogVisible) {
                 stateUpdate.selectedUnregisteredDroneId = '';
+                stateUpdate.newDroneName = '';
+                stateUpdate.newDroneSessionAutoStart = false;
             }
             return Object.assign({}, state, stateUpdate);
         case SET_SELECTED_UNREGISTERED_DRONE_ID:
             return Object.assign({}, state, { selectedUnregisteredDroneId: action.selectedUnregisteredDroneId });
+        case SET_DRONE_REGISTRATION_IN_PROGRESS:
+            return Object.assign({}, state, { isDroneRegistrationInProgress: action.isDroneRegistrationInProgress });
         case SET_NEW_REGISTERED_DRONE:
             let unregisteredDrones = state.unregisteredDrones.slice();
             unregisteredDrones = unregisteredDrones.filter(obj => obj.id !== action.unregisteredDroneId);

@@ -23,7 +23,6 @@ class UnregisteredDrones extends React.Component {
   }
 
   render() {
-    //const classes = tableStyles();
     const { classes } = this.props;
 
     return (<TableContainer component={Paper} className={classes.table}>

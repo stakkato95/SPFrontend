@@ -32,6 +32,9 @@ function* getUnregistered() {
 }
 
 function* registerDrone() {
+    yield put(setDroneRegistrationInProgress(true));
+    yield new Promise(resolve => setTimeout(resolve, 2000));
+    yield put(setDroneRegistrationInProgress(false));
     yield put(setRegisterDroneDialogVisible(false));
 
     // yield put(setDroneRegistrationInProgress(true));
@@ -58,6 +61,10 @@ function* registerDrone() {
     // }
 
     // yield put(setDroneRegistrationInProgress(false));
+
+
+
+    //TODO RESET NAME TO EMPTY, RESET UNREGISTEREDID TO EMPTY
 }
 
 export function* dronesSaga() {
