@@ -1,8 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import { withStyles } from '@material-ui/styles';
-
-import PropTypes from 'prop-types';
-
 import {
   Table,
   TableBody,
@@ -11,10 +10,13 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Container
+  Container,
+  Typography
 } from '@material-ui/core';
-import { connect } from 'react-redux';
+
 import { getUnregisteredDrones } from '../../redux/DroneActions';
+
+import PropTypes from 'prop-types';
 
 import UnregisteredListItem from './list/UnregisteredListItem';
 
@@ -32,7 +34,6 @@ class UnregisteredDrones extends React.Component {
 
   componentDidMount() {
     this.props.getUnregisteredDrones();
-    console.log('componentDidMount called');
   }
 
   render() {
@@ -50,10 +51,10 @@ class UnregisteredDrones extends React.Component {
     //TODO EMPTY STATE
 
     return (<Container className={classes.container} >
-      <TableContainer 
-      component={Paper} 
-      className={classes.table}
-      style={{ display: this.props.unregisteredDrones.length !== 0 ? 'block' : 'none' }}>
+      <TableContainer
+        component={Paper}
+        className={classes.table}
+        style={{ display: this.props.unregisteredDrones.length !== 0 ? 'block' : 'none' }}>
         <Table aria-label="collapsible table">
           <TableHead>
             <TableRow>
@@ -72,6 +73,15 @@ class UnregisteredDrones extends React.Component {
           </TableBody>
         </Table>
       </TableContainer>
+      <Typography
+        variant='subtitle1' gutterBottom
+        align='center'
+        style={{
+          display: this.props.unregisteredDrones.length !== 0 ? 'none' : 'block',
+          marginTop: '16px'
+        }}>
+        No unregistered drones.
+      </Typography>
     </Container>);
   }
 }

@@ -8,8 +8,7 @@ import UnregisteredDrones from './UnregisteredDrones';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.background.paper
-  },
+  }
 }));
 
 function Drones(props) {
