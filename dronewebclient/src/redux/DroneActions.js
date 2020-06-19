@@ -12,6 +12,7 @@ export const SET_NEW_DRONE_AUTO_SESSION_START = 'SET_NEW_DRONE_AUTO_SESSION_STAR
 export const REGISTER_DRONE = 'REGISTER_DRONE';
 export const SET_NEW_REGISTERED_DRONE = 'SET_NEW_REGISTERED_DRONE';
 export const SET_DRONE_REGISTRATION_IN_PROGRESS = 'SET_DRONE_REGISTRATION_IN_PROGRES';
+export const SET_REGISTER_DRONE_DIALOG_VISIBLE = 'SET_REGISTER_DRONE_DIALOG_VISIBLE';
 
 export const getRegisteredDrones = () => ({ type: GET_REGISTERED_DRONES });
 export const getUnregisteredDrones = () => ({ type: GET_UNREGISTERED_DRONES });
@@ -33,4 +34,8 @@ export const setNewRegisteredDrone = (unregisteredDroneId, newDrone) => ({
 export const setDroneRegistrationInProgress = (isDroneRegistrationInProgress) => ({ 
     type: SET_DRONE_REGISTRATION_IN_PROGRESS,
     isDroneRegistrationInProgress: isDroneRegistrationInProgress
+});
+export const setRegisterDroneDialogVisible = (isRegisterDroneDialogVisible) => ({ 
+    type: SET_REGISTER_DRONE_DIALOG_VISIBLE,
+    isRegisterDroneDialogVisible: isRegisterDroneDialogVisible
 });

@@ -5,22 +5,19 @@ import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } 
 
 import { connect } from 'react-redux';
 
-import { setNewDroneName, setNewDroneNameAutoSessionStart, registerDrone } from '../../redux/DroneActions';
+import {
+    setNewDroneName,
+    setNewDroneNameAutoSessionStart,
+    registerDrone,
+    setRegisterDroneDialogVisible
+} from '../../redux/DroneActions';
 
 class RegisterDroneDialog extends React.Component {
 
     render() {
-        const handleCancel = () => {
-            this.props.setDialogOpen(false)
-        };
-
-        const handleRegister = () => {
-            this.props.setDialogOpen(false)
-        };
-
         return (
             <div>
-                <Dialog open={this.props.dialogOpen}>
+                <Dialog open={this.props.isRegisterDroneDialogVisible}>
                     <DialogTitle id="form-dialog-title">Register a new drone</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
@@ -41,8 +38,8 @@ class RegisterDroneDialog extends React.Component {
                         />
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleCancel} color="primary">Cancel</Button>
-                        <Button onClick={handleRegister} color="primary">Register</Button>
+                        <Button onClick={() => this.props.setRegisterDroneDialogVisible(false)} color="primary">Cancel</Button>
+                        <Button onClick={() => this.props.registerDrone()} color="primary">Register</Button>
                     </DialogActions>
                 </Dialog>
             </div>
@@ -50,13 +47,18 @@ class RegisterDroneDialog extends React.Component {
     }
 }
 
-
-const mapDispatchToProps = { setNewDroneName, setNewDroneNameAutoSessionStart, registerDrone };
+const mapDispatchToProps = {
+    setNewDroneName,
+    setNewDroneNameAutoSessionStart,
+    registerDrone,
+    setRegisterDroneDialogVisible
+};
 const mapStateToProps = state => {
     return {
         newDroneName: state.newDroneName,
         newDroneSessionAutoStart: state.newDroneSessionAutoStart,
-        isDroneRegistrationInProgress: state.isDroneRegistrationInProgress
+        isDroneRegistrationInProgress: state.isDroneRegistrationInProgress,
+        isRegisterDroneDialogVisible: state.isRegisterDroneDialogVisible
     };
 };
 

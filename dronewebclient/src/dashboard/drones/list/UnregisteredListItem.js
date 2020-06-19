@@ -5,6 +5,10 @@ import { Box, Collapse, Typography, IconButton, Button } from '@material-ui/core
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import { KeyboardArrowDown, KeyboardArrowUp, Add } from '@material-ui/icons';
 
+import { connect } from 'react-redux';
+
+import { setRegisterDroneDialogVisible } from '../../../redux/DroneActions';
+
 import RegisterDroneDialog from '../RegisterDroneDialog'
 
 const useRowStyles = makeStyles((theme) => ({
@@ -24,7 +28,6 @@ const useRowStyles = makeStyles((theme) => ({
 function UnregisteredListItem(props) {
     const { row } = props;
     const [expanded, setExpanded] = React.useState(false);
-    const [dialogOpen, setDialogOpen] = React.useState(false);
 
     const classes = useRowStyles();
 
@@ -85,8 +88,8 @@ function UnregisteredListItem(props) {
                                     color="primary" 
                                     className={classes.button} 
                                     endIcon={<Add />}
-                                    onClick={() => setDialogOpen(true)}>Register</Button>
-                                <RegisterDroneDialog dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} />
+                                    onClick={() => props.setRegisterDroneDialogVisible(true)}>Register</Button>
+                                <RegisterDroneDialog />
                             </Box>
                         </Box>
                     </Collapse>
@@ -96,4 +99,6 @@ function UnregisteredListItem(props) {
     );
 }
 
-export default UnregisteredListItem;
+const mapDispatchToProps = { setRegisterDroneDialogVisible };
+
+export default connect(null, mapDispatchToProps)(UnregisteredListItem);
