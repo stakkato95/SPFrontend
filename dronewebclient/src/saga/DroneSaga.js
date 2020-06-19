@@ -70,10 +70,6 @@ function* registerDrone() {
 
     yield put(setDroneRegistrationInProgress(false));
     yield put(setRegisterDroneDialogVisible(false));
-
-
-
-    //TODO RESET NAME TO EMPTY, RESET UNREGISTEREDID TO EMPTY
 }
 
 export function* dronesSaga() {
