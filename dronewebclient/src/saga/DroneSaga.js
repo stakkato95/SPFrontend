@@ -2,6 +2,8 @@ import { all, put, takeLatest, select } from 'redux-saga/effects';
 
 import axios from 'axios';
 
+import { sleep } from '../helper/CommonHelper';
+
 import {
     setRegisteredDrones,
     setUnregisteredDrones,
@@ -33,34 +35,41 @@ function* getUnregistered() {
 
 function* registerDrone() {
     yield put(setDroneRegistrationInProgress(true));
-    yield new Promise(resolve => setTimeout(resolve, 2000));
+    yield sleep(2000);
+
+    const state = yield select();
+    try {
+        const registration = { unregisteredId: state.selectedUnregisteredDroneId, name: state.newDroneName };
+        var serverResult = yield axios.post('http://localhost:8080/api/drone/registerNew', registration);
+        if (serverResult.data.successful) {
+            console.log('CALLED');
+            yield put(setNewRegisteredDrone(state.selectedUnregisteredDroneId, serverResult.data.payload));
+        } else {
+            //TODO
+        }
+    } catch (e) {
+        console.log(e);
+        //TODO
+    }
+
+    if (state.newDroneSessionAutoStart) {
+        try {
+            const sessionInit = {};
+            //TODO start new session
+            //var serverResult = yield axios.post('http://localhost:8080/api/session/startNew', sessionInit);
+            // if (serverResult.successful) {
+
+            // } else {
+
+            // }
+        } catch (e) {
+            console.log(e);
+            //TODO
+        }
+    }
+
     yield put(setDroneRegistrationInProgress(false));
     yield put(setRegisterDroneDialogVisible(false));
-
-    // yield put(setDroneRegistrationInProgress(true));
-    // const state = select();
-
-    // try {
-        
-    //     const registration = { unregisteredId: state.selectedUnregisteredDroneId, name: state.newDroneName };
-    //     var serverResult = yield axios.post('http://localhost:8080/api/drone/registerNew', registration);
-    //     yield put(setNewRegisteredDrone(state.selectedUnregisteredDroneId, serverResult ));
-    // } catch (e) {
-    //     console.log(e);
-    //     //ignore
-    // }
-
-    // if (state.newDroneSessionAutoStart) {
-    //     try {
-    //         const sessionInit = {};
-    //         //TODO start new session
-    //         //var serverResult = yield axios.post('http://localhost:8080/api/session/startNew', sessionInit);
-    //     } catch (e) {
-    //         console.log(e);
-    //     }
-    // }
-
-    // yield put(setDroneRegistrationInProgress(false));
 
 
 

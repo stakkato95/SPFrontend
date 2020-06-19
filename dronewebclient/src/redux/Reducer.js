@@ -42,15 +42,19 @@ export const Reducer = (state = initialState, action) => {
         case SET_DRONE_REGISTRATION_IN_PROGRESS:
             return Object.assign({}, state, { isDroneRegistrationInProgress: action.isDroneRegistrationInProgress });
         case SET_NEW_REGISTERED_DRONE:
+            console.log(action);
+
             let unregisteredDrones = state.unregisteredDrones.slice();
             unregisteredDrones = unregisteredDrones.filter(obj => obj.id !== action.unregisteredDroneId);
 
             let registeredDrones = state.registeredDrones.slice();
             registeredDrones.push(action.newDrone);
-
+            
             return Object.assign({}, state, {
                 unregisteredDrones: unregisteredDrones,
-                registeredDrones: registeredDrones
+                registeredDrones: registeredDrones,
+                selectedUnregisteredDroneId: '',
+                newDroneName: ''
             });
     }
     return state;
