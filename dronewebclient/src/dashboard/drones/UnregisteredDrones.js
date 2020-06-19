@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { getUnregisteredDrones } from '../../redux/DroneActions'
+import { getUnregisteredDrones } from '../../redux/DroneActions';
 
 import UnregisteredListItem from './list/UnregisteredListItem';
 

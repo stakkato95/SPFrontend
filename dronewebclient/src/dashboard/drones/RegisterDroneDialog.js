@@ -3,6 +3,10 @@ import React from 'react';
 import { Button, TextField, Switch, FormControlLabel } from '@material-ui/core';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
 
+import { connect } from 'react-redux';
+
+import { setNewDroneName, setNewDroneNameAutoSessionStart, registerDrone } from '../../redux/DroneActions';
+
 class RegisterDroneDialog extends React.Component {
 
     render() {
@@ -22,9 +26,17 @@ class RegisterDroneDialog extends React.Component {
                         <DialogContentText>
                             To create a new drone, please enter its name. You can also automatically start a session with this drone.
                         </DialogContentText>
-                        <TextField autoFocus margin="dense" id="name" label="Drone name" type="text" fullWidth />
+                        <TextField
+                            autoFocus
+                            fullWidth
+                            margin="dense"
+                            id="name"
+                            label="Drone name"
+                            type="text"
+                            value={this.props.newDroneName}
+                            onChange={e => this.props.setNewDroneName(e.target.value)} />
                         <FormControlLabel
-                            control={<Switch />}
+                            control={<Switch onChange={e => this.props.setNewDroneNameAutoSessionStart(e.target.checked)} />}
                             label="Automatically start session"
                         />
                     </DialogContent>
@@ -38,4 +50,14 @@ class RegisterDroneDialog extends React.Component {
     }
 }
 
-export default RegisterDroneDialog;
+
+const mapDispatchToProps = { setNewDroneName, setNewDroneNameAutoSessionStart, registerDrone };
+const mapStateToProps = state => {
+    return {
+        newDroneName: state.newDroneName,
+        newDroneSessionAutoStart: state.newDroneSessionAutoStart,
+        isDroneRegistrationInProgress: state.isDroneRegistrationInProgress
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterDroneDialog);
