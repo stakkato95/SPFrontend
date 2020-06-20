@@ -1,6 +1,6 @@
 import { all, put, takeLatest, select } from 'redux-saga/effects';
 
-import axios from 'axios';
+import { api } from '../api/ApiConfig';
 
 import { sleep } from '../helper/CommonHelper';
 
@@ -15,7 +15,7 @@ import { GET_REGISTERED_DRONES, GET_UNREGISTERED_DRONES, REGISTER_DRONE } from '
 
 function* getRegistered() {
     try {
-        var serverResult = yield axios.get('http://localhost:8080/api/drone/getAllRegistered');
+        var serverResult = yield api().get('/drone/getAllRegistered');
         serverResult.data.forEach(e => {
             e.showUpTime = new Date(e.showUpTime).toLocaleString();
             e.registrationTime = new Date(e.registrationTime).toLocaleString();
@@ -32,7 +32,7 @@ function* getRegistered() {
 
 function* getUnregistered() {
     try {
-        var serverResult = yield axios.get('http://localhost:8080/api/drone/getAllUnregistered');
+        var serverResult = yield api().get('/drone/getAllUnregistered');
         yield put(setUnregisteredDrones(serverResult.data));
     } catch (e) {
         console.log(e);
@@ -47,7 +47,7 @@ function* registerDrone() {
     const state = yield select();
     try {
         const registration = { unregisteredId: state.selectedUnregisteredDroneId, name: state.newDroneName };
-        var serverResult = yield axios.post('http://localhost:8080/api/drone/registerNew', registration);
+        var serverResult = yield api().post('/drone/registerNew', registration);
         if (serverResult.data.successful) {
             console.log('CALLED');
             yield put(setNewRegisteredDrone(state.selectedUnregisteredDroneId, serverResult.data.payload));
