@@ -1,10 +1,9 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import { droneReducer, droneInitialState } from './DroneReducer';
-import { sessionReducer, sessionInitialState } from './SessionReducer';
+import { droneReducer } from './DroneReducer';
+import { sessionReducer } from './SessionReducer';
 
 import createSagaMiddleware from 'redux-saga';
 
-import { dronesSaga } from '../saga/DronesSaga';
 import { rootSaga } from '../saga/RootSaga';
 
 export const ConfigureStore = () => {

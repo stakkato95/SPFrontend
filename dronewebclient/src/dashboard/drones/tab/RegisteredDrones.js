@@ -14,11 +14,11 @@ import {
   Typography
 } from '@material-ui/core';
 
-import { getRegisteredDrones } from '../../redux/DroneActions';
+import { getRegisteredDrones } from '../../../redux/DroneActions';
 
 import PropTypes from 'prop-types';
 
-import RegisteredListItem from './list/RegisteredListItem';
+import RegisteredListItem from '../list/RegisteredListItem';
 
 const styles = theme => ({
   table: {

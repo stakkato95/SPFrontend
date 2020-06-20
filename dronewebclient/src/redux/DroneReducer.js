@@ -38,7 +38,6 @@ export const droneReducer = (state = droneInitialState, action) => {
             }
             return Object.assign({}, state, stateUpdate);
         case SET_SELECTED_UNREGISTERED_DRONE_ID:
-            console.log(`SET_SELECTED_UNREGISTERED_DRONE_ID ${action.selectedUnregisteredDroneId}`);
             return Object.assign({}, state, { selectedUnregisteredDroneId: action.selectedUnregisteredDroneId });
         case SET_DRONE_REGISTRATION_IN_PROGRESS:
             return Object.assign({}, state, { isDroneRegistrationInProgress: action.isDroneRegistrationInProgress });
