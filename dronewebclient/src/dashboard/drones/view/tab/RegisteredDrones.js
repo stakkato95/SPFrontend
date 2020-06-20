@@ -14,11 +14,11 @@ import {
   Typography
 } from '@material-ui/core';
 
-import { getUnregisteredDrones } from '../architecture/redux/DroneActions';
+import { getRegisteredDrones } from '../../architecture/redux/DroneActions';
 
 import PropTypes from 'prop-types';
 
-import UnregisteredListItem from '../list/UnregisteredListItem';
+import RegisteredListItem from '../list/RegisteredListItem';
 
 const styles = theme => ({
   table: {
@@ -30,10 +30,10 @@ const styles = theme => ({
   }
 });
 
-class UnregisteredDrones extends React.Component {
+class RegisteredDrones extends React.Component {
 
   componentDidMount() {
-    this.props.getUnregisteredDrones();
+    this.props.getRegisteredDrones();
   }
 
   render() {
@@ -43,21 +43,19 @@ class UnregisteredDrones extends React.Component {
       <TableContainer
         component={Paper}
         className={classes.table}
-        style={{ display: this.props.unregisteredDrones.length !== 0 ? 'block' : 'none' }}>
+        style={{ display: this.props.registeredDrones.length !== 0 ? 'block' : 'none' }}>
         <Table>
           <TableHead>
             <TableRow>
               <TableCell />
               <TableCell>Id</TableCell>
-              <TableCell align="right">IP</TableCell>
-              <TableCell align="right">Latitude</TableCell>
-              <TableCell align="right">Longitude</TableCell>
-              <TableCell align="right">Altitude</TableCell>
+              <TableCell align="right">Name</TableCell>
+              <TableCell align="right">Last connection time</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {this.props.unregisteredDrones.map((row) => (
-              <UnregisteredListItem key={row.id} row={row} />
+            {this.props.registeredDrones.map((row) => (
+              <RegisteredListItem key={row.id} row={row} />
             ))}
           </TableBody>
         </Table>
@@ -66,24 +64,24 @@ class UnregisteredDrones extends React.Component {
         variant='subtitle1' gutterBottom
         align='center'
         style={{
-          display: this.props.unregisteredDrones.length !== 0 ? 'none' : 'block',
+          display: this.props.registeredDrones.length !== 0 ? 'none' : 'block',
           marginTop: '16px'
         }}>
-        No unregistered drones.
+        No registered drones.
       </Typography>
     </Container>);
   }
 }
 
-UnregisteredDrones.propTypes = {
+RegisteredDrones.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-const mapDispatchToProps = { getUnregisteredDrones };
+const mapDispatchToProps = { getRegisteredDrones };
 const mapStateToProps = state => {
   return {
-    unregisteredDrones: state.drone.unregisteredDrones
+    registeredDrones: state.drone.registeredDrones
   };
 };
 
-export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(UnregisteredDrones));
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(RegisteredDrones));

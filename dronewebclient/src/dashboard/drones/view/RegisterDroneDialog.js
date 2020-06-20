@@ -10,7 +10,7 @@ import {
     setNewDroneNameAutoSessionStart,
     registerDrone,
     setRegisterDroneDialogVisible
-} from './architecture/redux/DroneActions';
+} from '../architecture/redux/DroneActions';
 
 const styles = theme => ({
     container: {
