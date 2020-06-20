@@ -14,7 +14,9 @@ function* getDrone() {
     const state = yield select();
 
     try {
-        var serverResult = yield api().get(`/drone/${state.session.session.droneId}`);
+        //var serverResult = yield api().get(`/drone/${state.session.session.droneId}`);
+        var serverResult = yield api().get('/drone/5eede157c4269317b428dedf');
+        console.log('GET DRONE' + serverResult.data.payload);
         yield put(setDrone(serverResult.data.payload));
     } catch (e) {
         console.log(e);

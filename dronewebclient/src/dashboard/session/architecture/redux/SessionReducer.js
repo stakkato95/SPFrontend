@@ -1,11 +1,11 @@
-import { 
-    SET_SESSION, 
-    SET_DRONE 
+import {
+    SET_SESSION,
+    SET_DRONE
 } from './SessionActions';
 
 export const sessionInitialState = {
-    session: null,
-    drone: null
+    session: {},
+    drone: {}
 };
 
 export const sessionReducer = (state = sessionInitialState, action) => {

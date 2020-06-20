@@ -22,7 +22,7 @@ class DroneInfo extends React.Component {
                             <Memory />
                         </Avatar>
                     </ListItemAvatar>
-                    <ListItemText primary="hdahdjkashdjakshdajkdhajkshd" secondary="Id" />
+                    <ListItemText primary={this.props.drone.id} secondary="Id" />
                 </ListItem>
                 <ListItem>
                     <ListItemAvatar>
@@ -30,7 +30,7 @@ class DroneInfo extends React.Component {
                             <SettingsEthernet />
                         </Avatar>
                     </ListItemAvatar>
-                    <ListItemText primary="100.500.100.500" secondary="IP" />
+                    <ListItemText primary={this.props.drone.ip} secondary="IP" />
                 </ListItem> 
                 <ListItem>
                     <ListItemAvatar>
@@ -38,7 +38,7 @@ class DroneInfo extends React.Component {
                             <AccountCircle />
                         </Avatar>
                     </ListItemAvatar>
-                    <ListItemText primary="Hello drone" secondary="Name" />
+                    <ListItemText primary={this.props.drone.name} secondary="Name" />
                 </ListItem>
             </List>
         </>);
