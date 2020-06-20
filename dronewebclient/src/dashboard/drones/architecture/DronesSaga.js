@@ -11,7 +11,7 @@ import {
     setDroneRegistrationInProgress,
     setRegisterDroneDialogVisible
 } from './redux/DroneActions';
-import { setSessionId } from '../../session/architecture/redux/SessionActions';
+import { setSession } from '../../session/architecture/redux/SessionActions';
 import {
     GET_REGISTERED_DRONES,
     GET_UNREGISTERED_DRONES,
@@ -69,7 +69,7 @@ function* registerDrone() {
             if (serverResult.data.successful) {
                 console.log(serverResult.data.payload);
                 console.log('CALLED in drones saga');
-                yield put(setSessionId(serverResult.data.payload.sessionId));
+                yield put(setSession(serverResult.data.payload));
             } else {
                 //TODO
             }
