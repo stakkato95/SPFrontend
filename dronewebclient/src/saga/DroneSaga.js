@@ -22,7 +22,6 @@ function* getRegistered() {
             e.lastConnectionTime = new Date(e.lastConnectionTime).toLocaleString();
             e.lastSeenTime = new Date(e.lastSeenTime).toLocaleString();
         });
-        console.log(serverResult.data);
         yield put(setRegisteredDrones(serverResult.data));
     } catch (e) {
         console.log(e);
@@ -49,7 +48,6 @@ function* registerDrone() {
         const registration = { unregisteredId: state.selectedUnregisteredDroneId, name: state.newDroneName };
         var serverResult = yield api().post('/drone/registerNew', registration);
         if (serverResult.data.successful) {
-            console.log('CALLED');
             yield put(setNewRegisteredDrone(state.selectedUnregisteredDroneId, serverResult.data.payload));
         } else {
             //TODO
@@ -61,14 +59,13 @@ function* registerDrone() {
 
     if (state.newDroneSessionAutoStart) {
         try {
-            const sessionInit = {};
-            //TODO start new session
-            //var serverResult = yield axios.post('http://localhost:8080/api/session/startNew', sessionInit);
-            // if (serverResult.successful) {
-
-            // } else {
-
-            // }
+            const sessionInit = { droneId: serverResult.data.payload.id };
+            var serverResult = yield api().post('/session/startSession', sessionInit);
+            if (serverResult.data.successful) {
+                console.log(serverResult.data.payload);
+            } else {
+                //TODO
+            }
         } catch (e) {
             console.log(e);
             //TODO

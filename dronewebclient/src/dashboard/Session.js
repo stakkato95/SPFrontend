@@ -17,8 +17,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Session() {
-    console.log('called')
-
     const classes = useStyles();
 
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
