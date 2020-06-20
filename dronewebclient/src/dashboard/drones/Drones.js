@@ -3,8 +3,8 @@ import React from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import { makeStyles, AppBar, Tabs, Tab } from '@material-ui/core';
 
-import RegisteredDrones from './RegisteredDrones';
-import UnregisteredDrones from './UnregisteredDrones';
+import RegisteredDrones from './tab/RegisteredDrones';
+import UnregisteredDrones from './tab/UnregisteredDrones';
 
 const useStyles = makeStyles((theme) => ({
   root: {
