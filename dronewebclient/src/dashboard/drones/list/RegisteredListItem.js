@@ -7,11 +7,6 @@ import { KeyboardArrowDown, KeyboardArrowUp, Add } from '@material-ui/icons';
 
 import { connect } from 'react-redux';
 
-import {
-    setRegisterDroneDialogVisible,
-    setSelectedUnregisteredDroneId
-} from '../../../redux/DroneActions';
-
 const useRowStyles = makeStyles((theme) => ({
     root: {
         '& > *': {
@@ -100,6 +95,4 @@ function RegisteredListItem(props) {
     );
 }
 
-const mapDispatchToProps = { setRegisterDroneDialogVisible, setSelectedUnregisteredDroneId };
-
-export default connect(null, mapDispatchToProps)(RegisteredListItem);
+export default RegisteredListItem;

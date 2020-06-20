@@ -11,6 +11,7 @@ import {
     setDroneRegistrationInProgress,
     setRegisterDroneDialogVisible
 } from '../redux/DroneActions';
+import { setSessionId } from '../redux/SessionActions';
 import { GET_REGISTERED_DRONES, GET_UNREGISTERED_DRONES, REGISTER_DRONE } from '../redux/DroneActions';
 
 function* getRegistered() {
@@ -45,10 +46,10 @@ function* registerDrone() {
 
     const state = yield select();
     try {
-        const registration = { unregisteredId: state.selectedUnregisteredDroneId, name: state.newDroneName };
+        const registration = { unregisteredId: state.drone.selectedUnregisteredDroneId, name: state.drone.newDroneName };
         var serverResult = yield api().post('/drone/registerNew', registration);
         if (serverResult.data.successful) {
-            yield put(setNewRegisteredDrone(state.selectedUnregisteredDroneId, serverResult.data.payload));
+            yield put(setNewRegisteredDrone(state.drone.selectedUnregisteredDroneId, serverResult.data.payload));
         } else {
             //TODO
         }
@@ -57,12 +58,14 @@ function* registerDrone() {
         //TODO
     }
 
-    if (state.newDroneSessionAutoStart) {
+    if (state.drone.newDroneSessionAutoStart) {
         try {
             const sessionInit = { droneId: serverResult.data.payload.id };
             var serverResult = yield api().post('/session/startSession', sessionInit);
             if (serverResult.data.successful) {
                 console.log(serverResult.data.payload);
+                console.log('CALLED in drones saga');
+                yield put(setSessionId(serverResult.data.payload.sessionId));
             } else {
                 //TODO
             }

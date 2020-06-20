@@ -97,11 +97,11 @@ const mapDispatchToProps = {
 };
 const mapStateToProps = state => {
     return {
-        newDroneName: state.newDroneName,
-        newDroneSessionAutoStart: state.newDroneSessionAutoStart,
-        isDroneRegistrationInProgress: state.isDroneRegistrationInProgress,
-        isRegisterDroneDialogVisible: state.isRegisterDroneDialogVisible,
-        isDroneRegistrationInProgress: state.isDroneRegistrationInProgress
+        newDroneName: state.drone.newDroneName,
+        newDroneSessionAutoStart: state.drone.newDroneSessionAutoStart,
+        isDroneRegistrationInProgress: state.drone.isDroneRegistrationInProgress,
+        isRegisterDroneDialogVisible: state.drone.isRegisterDroneDialogVisible,
+        isDroneRegistrationInProgress: state.drone.isDroneRegistrationInProgress
     };
 };
 

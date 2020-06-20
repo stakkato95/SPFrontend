@@ -82,7 +82,7 @@ UnregisteredDrones.propTypes = {
 const mapDispatchToProps = { getUnregisteredDrones };
 const mapStateToProps = state => {
   return {
-    unregisteredDrones: state.unregisteredDrones
+    unregisteredDrones: state.drone.unregisteredDrones
   };
 };
 

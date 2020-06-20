@@ -9,7 +9,7 @@ import {
     SET_DRONE_REGISTRATION_IN_PROGRESS
 } from './DroneActions';
 
-export const initialState = {
+export const droneInitialState = {
     registeredDrones: [],
     unregisteredDrones: [],
     newDroneName: '',
@@ -19,7 +19,7 @@ export const initialState = {
     isRegisterDroneDialogVisible: false
 };
 
-export const Reducer = (state = initialState, action) => {
+export const droneReducer = (state = droneInitialState, action) => {
     switch (action.type) {
         case SET_REGISTERED_DRONES:
             return Object.assign({}, state, { registeredDrones: action.registeredDrones });
@@ -38,6 +38,7 @@ export const Reducer = (state = initialState, action) => {
             }
             return Object.assign({}, state, stateUpdate);
         case SET_SELECTED_UNREGISTERED_DRONE_ID:
+            console.log(`SET_SELECTED_UNREGISTERED_DRONE_ID ${action.selectedUnregisteredDroneId}`);
             return Object.assign({}, state, { selectedUnregisteredDroneId: action.selectedUnregisteredDroneId });
         case SET_DRONE_REGISTRATION_IN_PROGRESS:
             return Object.assign({}, state, { isDroneRegistrationInProgress: action.isDroneRegistrationInProgress });
