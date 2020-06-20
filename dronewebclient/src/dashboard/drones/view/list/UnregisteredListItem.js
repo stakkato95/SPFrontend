@@ -30,7 +30,6 @@ const useRowStyles = makeStyles((theme) => ({
 
 function UnregisteredListItem(props) {
     const { row } = props;
-    console.log(`ROW ID ${row.id}`);
 
     const [expanded, setExpanded] = React.useState(false);
 

@@ -6,6 +6,7 @@ import { withStyles } from '@material-ui/styles';
 
 import DroneInfo from './info/DroneInfo';
 import SessionInfo from './info/SessionInfo';
+import SessionDuration from './info/SessionDuration';
 
 import { getSessionAndDrone } from '../architecture/redux/SessionActions';
 
@@ -38,6 +39,7 @@ class Session extends React.Component {
                 </Grid>
                 <Grid item xs={4}>
                     <Paper className={classes.paper}>
+                        <SessionDuration />
                     </Paper>
                 </Grid>
             </Grid>

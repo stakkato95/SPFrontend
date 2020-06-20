@@ -42,8 +42,6 @@ export const droneReducer = (state = droneInitialState, action) => {
         case SET_DRONE_REGISTRATION_IN_PROGRESS:
             return Object.assign({}, state, { isDroneRegistrationInProgress: action.isDroneRegistrationInProgress });
         case SET_NEW_REGISTERED_DRONE:
-            console.log(action);
-
             let unregisteredDrones = state.unregisteredDrones.slice();
             unregisteredDrones = unregisteredDrones.filter(obj => obj.id !== action.unregisteredDroneId);
 

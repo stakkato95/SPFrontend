@@ -2,8 +2,6 @@ import { all, put, takeLatest, select } from 'redux-saga/effects';
 
 import { api } from '../../../api/ApiConfig';
 
-import { toShortTime } from '../../../helper/CommonHelper';
-
 import {
     setSessionAndDrone
 } from './redux/SessionActions';
@@ -18,7 +16,6 @@ function* getSessionAndDrone() {
     try {
         var serverResult = yield api().get('/session/getRunning');
         session = serverResult.data.payload;
-        session.sessionStartTime = toShortTime(session.sessionStartTime);
     } catch (e) {
         console.log(e);
         //ignore
@@ -28,7 +25,6 @@ function* getSessionAndDrone() {
     try {
         var serverResult = yield api().get(`/drone/${session.droneId}`);
         drone = serverResult.data.payload;
-        console.log(drone);
     } catch (e) {
         console.log(e);
         //ignore
