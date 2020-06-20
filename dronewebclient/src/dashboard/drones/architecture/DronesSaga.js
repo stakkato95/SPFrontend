@@ -2,7 +2,7 @@ import { all, put, takeLatest, select } from 'redux-saga/effects';
 
 import { api } from '../../../api/ApiConfig';
 
-import { sleep } from '../../../helper/CommonHelper';
+import { toShortTime } from '../../../helper/CommonHelper';
 
 import {
     setRegisteredDrones,
@@ -11,7 +11,6 @@ import {
     setDroneRegistrationInProgress,
     setRegisterDroneDialogVisible
 } from './redux/DroneActions';
-import { setSession } from '../../session/architecture/redux/SessionActions';
 import {
     GET_REGISTERED_DRONES,
     GET_UNREGISTERED_DRONES,
@@ -22,10 +21,10 @@ function* getRegistered() {
     try {
         var serverResult = yield api().get('/drone/getAllRegistered');
         serverResult.data.forEach(e => {
-            e.showUpTime = new Date(e.showUpTime).toLocaleString();
-            e.registrationTime = new Date(e.registrationTime).toLocaleString();
-            e.lastConnectionTime = new Date(e.lastConnectionTime).toLocaleString();
-            e.lastSeenTime = new Date(e.lastSeenTime).toLocaleString();
+            e.showUpTime = toShortTime(e.showUpTime);
+            e.registrationTime = toShortTime(e.registrationTime);
+            e.lastConnectionTime = toShortTime(e.lastConnectionTime);
+            e.lastSeenTime = toShortTime(e.lastSeenTime);
         });
         yield put(setRegisteredDrones(serverResult.data));
     } catch (e) {
@@ -46,7 +45,6 @@ function* getUnregistered() {
 
 function* registerDrone() {
     yield put(setDroneRegistrationInProgress(true));
-    yield sleep(2000);
 
     const state = yield select();
     try {
@@ -67,9 +65,7 @@ function* registerDrone() {
             const sessionInit = { droneId: serverResult.data.payload.id };
             var serverResult = yield api().post('/session/startSession', sessionInit);
             if (serverResult.data.successful) {
-                console.log(serverResult.data.payload);
-                console.log('CALLED in drones saga');
-                yield put(setSession(serverResult.data.payload));
+                //TODO
             } else {
                 //TODO
             }

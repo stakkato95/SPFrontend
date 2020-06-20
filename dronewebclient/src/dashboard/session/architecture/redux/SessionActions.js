@@ -1,10 +1,9 @@
-//called from drone saga
-export const SET_SESSION = 'SET_SESSION';
+export const GET_SESSION_AND_DRONE = 'GET_SESSION_AND_DRONE';
+export const SET_SESSION_AND_DRONE = 'SET_SESSION_AND_DRONE';
 
-export const GET_DRONE = 'GET_DRONE';
-export const SET_DRONE = 'SET_DRONE';
-
-export const setSession = (session) => ({ type: SET_SESSION, session: session });
-
-export const getDrone = () => ({ type: GET_DRONE });
-export const setDrone = (drone) => ({ type: SET_DRONE, drone: drone });
+export const getSessionAndDrone = () => ({ type: GET_SESSION_AND_DRONE });
+export const setSessionAndDrone = (session, drone) => ({
+    type: SET_SESSION_AND_DRONE,
+    session: session,
+    drone: drone
+});

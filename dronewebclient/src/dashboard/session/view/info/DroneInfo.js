@@ -4,13 +4,7 @@ import { connect } from 'react-redux';
 import { Typography, List, ListItem, ListItemText, ListItemAvatar, Avatar } from '@material-ui/core';
 import { Memory, SettingsEthernet, AccountCircle } from '@material-ui/icons';
 
-import { getDrone } from '../../architecture/redux/SessionActions';
-
 class DroneInfo extends React.Component {
-
-    componentDidMount() {
-        this.props.getDrone();
-    }
 
     render() {
         return (<>
@@ -45,11 +39,10 @@ class DroneInfo extends React.Component {
     }
 }
 
-const mapDispatchToProps = { getDrone };
 const mapStateToProps = state => {
     return {
         drone: state.session.drone
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DroneInfo);
+export default connect(mapStateToProps, null)(DroneInfo);

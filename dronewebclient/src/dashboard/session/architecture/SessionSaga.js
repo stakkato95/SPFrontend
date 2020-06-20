@@ -2,30 +2,43 @@ import { all, put, takeLatest, select } from 'redux-saga/effects';
 
 import { api } from '../../../api/ApiConfig';
 
+import { toShortTime } from '../../../helper/CommonHelper';
+
 import {
-    setDrone
+    setSessionAndDrone
 } from './redux/SessionActions';
 import {
-    GET_DRONE,
-    SET_DRONE
+    GET_SESSION_AND_DRONE
 } from './redux/SessionActions';
 
-function* getDrone() {
+function* getSessionAndDrone() {
     const state = yield select();
 
+    let session = {};
     try {
-        //var serverResult = yield api().get(`/drone/${state.session.session.droneId}`);
-        var serverResult = yield api().get('/drone/5eede157c4269317b428dedf');
-        console.log('GET DRONE' + serverResult.data.payload);
-        yield put(setDrone(serverResult.data.payload));
+        var serverResult = yield api().get('/session/getRunning');
+        session = serverResult.data.payload;
+        session.sessionStartTime = toShortTime(session.sessionStartTime);
     } catch (e) {
         console.log(e);
         //ignore
     }
+
+    let drone = {};
+    try {
+        var serverResult = yield api().get(`/drone/${session.droneId}`);
+        drone = serverResult.data.payload;
+        console.log(drone);
+    } catch (e) {
+        console.log(e);
+        //ignore
+    }
+
+    yield put(setSessionAndDrone(session, drone));
 }
 
 export function* sessionSaga() {
     yield all([
-        yield takeLatest(GET_DRONE, getDrone)
+        yield takeLatest(GET_SESSION_AND_DRONE, getSessionAndDrone)
     ]);
 }
