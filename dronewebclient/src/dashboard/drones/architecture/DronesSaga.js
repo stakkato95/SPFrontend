@@ -11,7 +11,7 @@ import {
     setDroneRegistrationInProgress,
     setRegisterDroneDialogVisible
 } from './redux/DroneActions';
-import { setSessionId } from '../../../redux/SessionActions';
+import { setSessionId } from '../../session/architecture/redux/SessionActions';
 import {
     GET_REGISTERED_DRONES,
     GET_UNREGISTERED_DRONES,

@@ -24,7 +24,7 @@ import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import { withRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 import Drones from './drones/view/Drones';
-import Session from './Session';
+import Session from './session/view/Session';
 
 
 function Copyright() {
