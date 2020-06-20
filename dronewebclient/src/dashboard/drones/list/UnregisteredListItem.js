@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { 
     setRegisterDroneDialogVisible, 
     setSelectedUnregisteredDroneId
-} from '../../../redux/DroneActions';
+} from '../architecture/redux/DroneActions';
 
 import RegisterDroneDialog from '../RegisterDroneDialog'
 

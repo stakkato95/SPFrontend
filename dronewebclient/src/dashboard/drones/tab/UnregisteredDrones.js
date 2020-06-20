@@ -14,7 +14,7 @@ import {
   Typography
 } from '@material-ui/core';
 
-import { getUnregisteredDrones } from '../../../redux/DroneActions';
+import { getUnregisteredDrones } from '../architecture/redux/DroneActions';
 
 import PropTypes from 'prop-types';
 

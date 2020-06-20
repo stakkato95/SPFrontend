@@ -1,5 +1,5 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import { droneReducer } from './DroneReducer';
+import { droneReducer } from '../dashboard/drones/architecture/redux/DroneReducer';
 import { sessionReducer } from './SessionReducer';
 
 import createSagaMiddleware from 'redux-saga';

@@ -1,8 +1,8 @@
 import { all, put, takeLatest, select } from 'redux-saga/effects';
 
-import { api } from '../api/ApiConfig';
+import { api } from '../../../api/ApiConfig';
 
-import { sleep } from '../helper/CommonHelper';
+import { sleep } from '../../../helper/CommonHelper';
 
 import {
     setRegisteredDrones,
@@ -10,9 +10,13 @@ import {
     setNewRegisteredDrone,
     setDroneRegistrationInProgress,
     setRegisterDroneDialogVisible
-} from '../redux/DroneActions';
-import { setSessionId } from '../redux/SessionActions';
-import { GET_REGISTERED_DRONES, GET_UNREGISTERED_DRONES, REGISTER_DRONE } from '../redux/DroneActions';
+} from './redux/DroneActions';
+import { setSessionId } from '../../../redux/SessionActions';
+import {
+    GET_REGISTERED_DRONES,
+    GET_UNREGISTERED_DRONES,
+    REGISTER_DRONE  
+} from './redux/DroneActions';
 
 function* getRegistered() {
     try {
