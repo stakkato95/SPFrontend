@@ -14,6 +14,8 @@ import {
 } from '@material-ui/icons';
 
 import ControlItem from './ControlItem';
+import { sendAction } from '../../architecture/redux/SessionActions';
+import { ActionType } from '../../../../model/ActionType';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -24,46 +26,56 @@ const useStyles = makeStyles((theme) => ({
 function Control() {
     const classes = useStyles();
 
+    const dispatch = useDispatch();
+
     const controlItems = [
         {
             text: 'Take off safely',
             icon: <FlightTakeoff />,
-            configurable: false
+            configurable: false,
+            onClick: () => { dispatch(sendAction(ActionType.TAKE_OFF_SAFELY)) }
         },
         {
             text: 'Land safely',
             icon: <FlightLand />,
-            configurable: false
+            configurable: false,
+            onClick: () => { dispatch(sendAction(ActionType.LAND_SAFELY)) }
         },
         {
             text: 'Fly upward',
             icon: <ArrowUpward />,
-            configurable: true
+            configurable: true,
+            onClick: (value) => { dispatch(sendAction(ActionType.FLY_UPWARD, value)) }
         },
         {
             text: 'Fly downward',
             icon: <ArrowDownward />,
-            configurable: true
+            configurable: true,
+            onClick: (value) => { dispatch(sendAction(ActionType.FLY_DOWNWARD, value)) }
         },
         {
             text: 'Fly to left',
             icon: <ArrowBack />,
-            configurable: true
+            configurable: true,
+            onClick: (value) => { dispatch(sendAction(ActionType.FLY_TO_LEFT, value)) }
         },
         {
             text: 'Fly to right',
             icon: <ArrowForward />,
-            configurable: true
+            configurable: true,
+            onClick: (value) => { dispatch(sendAction(ActionType.FLY_TO_RIGHT, value)) }
         },
         {
             text: 'Rotate left',
             icon: <RotateLeft />,
-            configurable: true
+            configurable: true,
+            onClick: (value) => { dispatch(sendAction(ActionType.ROTATE_LEFT, value)) }
         },
         {
             text: 'Rotate right',
             icon: <RotateRight />,
-            configurable: true
+            configurable: true,
+            onClick: (value) => { dispatch(sendAction(ActionType.ROTATE_RIGHT, value)) }
         }
     ];
 
@@ -72,18 +84,13 @@ function Control() {
     //     user: state.user,
     // }), shallowEqual);
 
-    const dispatch = useDispatch();
-
     return (<div>
         <Typography variant="h4" gutterBottom>Send actions</Typography>
         <Grid container spacing={3}>
             {controlItems.map(item => {
                 return (
                     <Grid item xs={6}>
-                        <ControlItem
-                            text={item.text}
-                            icon={item.icon}
-                            configurable={item.configurable} />
+                        <ControlItem controlConfig={item} />
                     </Grid>
                 );
             })}
