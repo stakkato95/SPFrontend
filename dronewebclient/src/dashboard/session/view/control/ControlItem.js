@@ -16,10 +16,10 @@ const useStyles = makeStyles((theme) => ({
     button: {
         margin: theme.spacing(1),
         borderRadius: 10
-    },
+    }
 }));
 
-function Control(props) {
+function ControlItem(props) {
     const classes = useStyles();
 
     const runningActions = useSelector(state => state.session.runningActions);
@@ -66,4 +66,4 @@ function Control(props) {
 
 }
 
-export default Control;
+export default ControlItem;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
-import { makeStyles, Typography, Grid } from '@material-ui/core';
+import { makeStyles, Typography, Grid, CircularProgress, Container } from '@material-ui/core';
 import {
     FlightTakeoff,
     FlightLand,
@@ -20,6 +20,22 @@ import { ActionType } from '../../../../model/ActionType';
 const useStyles = makeStyles((theme) => ({
     paper: {
         padding: '16px'
+    },
+    container: {
+        padding: '0px',
+        position: 'relative'
+    },
+    progress: {
+        position: 'absolute',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        marginTop: 'auto',
+        marginBottom: 'auto',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        textAlign: 'center'
     }
 }));
 
@@ -27,6 +43,8 @@ function Control() {
     const classes = useStyles();
 
     const dispatch = useDispatch();
+
+    const runningActions = useSelector(state => state.session.runningActions);
 
     const controlItems = [
         {
@@ -86,15 +104,22 @@ function Control() {
 
     return (<div>
         <Typography variant="h4" gutterBottom>Send actions</Typography>
-        <Grid container spacing={3}>
-            {controlItems.map(item => {
-                return (
-                    <Grid item xs={6}>
-                        <ControlItem controlConfig={item} />
-                    </Grid>
-                );
-            })}
-        </Grid>
+        <Container className={classes.container}>
+            <CircularProgress
+                className={classes.progress}
+                style={{ display: runningActions.length ? 'block' : 'none' }}
+                size={60}
+            />
+            <Grid container spacing={3} className={classes.container}>
+                {controlItems.map(item => {
+                    return (
+                        <Grid item xs={6}>
+                            <ControlItem controlConfig={item} />
+                        </Grid>
+                    );
+                })}
+            </Grid>
+        </Container>
     </div>);
 
 }

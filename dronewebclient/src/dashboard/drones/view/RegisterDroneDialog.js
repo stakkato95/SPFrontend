@@ -49,7 +49,7 @@ class RegisterDroneDialog extends React.Component {
                             <Container className={classes.container}>
                                 <DialogContentText>
                                     To create a new drone, please enter its name. You can also automatically start a session with this drone.
-                            </DialogContentText>
+                                </DialogContentText>
                                 <TextField
                                     autoFocus
                                     fullWidth
