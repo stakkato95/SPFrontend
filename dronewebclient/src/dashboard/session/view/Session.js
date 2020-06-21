@@ -9,7 +9,7 @@ import SessionInfo from './info/SessionInfo';
 import SessionDuration from './info/SessionDuration';
 import Control from './control/Control';
 
-import { getSessionAndDrone } from '../architecture/redux/SessionActions';
+import { getSessionAndDroneAndRunningActions } from '../architecture/redux/SessionActions';
 
 const styles = theme => ({
     paper: {
@@ -20,7 +20,7 @@ const styles = theme => ({
 class Session extends React.Component {
 
     componentDidMount() {
-        this.props.getSessionAndDrone();
+        this.props.getSessionAndDroneAndRunningActions();
     }
 
     render() {
@@ -53,6 +53,6 @@ class Session extends React.Component {
     }
 }
 
-const mapDispatchToProps = { getSessionAndDrone };
+const mapDispatchToProps = { getSessionAndDroneAndRunningActions };
 
 export default withStyles(styles)(connect(null, mapDispatchToProps)(Session));

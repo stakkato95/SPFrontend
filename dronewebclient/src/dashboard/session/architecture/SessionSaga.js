@@ -3,14 +3,16 @@ import { all, put, takeLatest, select } from 'redux-saga/effects';
 import { api } from '../../../api/ApiConfig';
 
 import {
-    setSessionAndDrone
+    setSessionAndDrone,
+    addRunningAction,
+    addAllRunningActions
 } from './redux/SessionActions';
 import {
-    GET_SESSION_AND_DRONE,
+    GET_SESSION_AND_DRONE_AND_ALL_RUNNING_ACTIONS,
     SEND_ACTION
 } from './redux/SessionActions';
 
-function* getSessionAndDrone() {
+function* getSessionAndDroneAndRunningActions() {
     const state = yield select();
 
     let session = {};
@@ -31,6 +33,15 @@ function* getSessionAndDrone() {
         //ignore
     }
 
+    try {
+        var serverResult = yield api().get(`/action/getAllRunning/${session.id}`);
+        console.log(serverResult.data);
+        yield put(addAllRunningActions(serverResult.data.payload));
+    } catch (e) {
+        console.log(e);
+        //ignore
+    }
+
     yield put(setSessionAndDrone(session, drone));
 }
 
@@ -45,7 +56,7 @@ function* sendAction(action) {
             value: action.value
         };
         var serverResult = yield api().post('/action/start', startActionRequest);
-        console.log(serverResult.data);
+        yield put(addRunningAction(serverResult.data.payload));
     } catch (e) {
         console.log(e);
         //ignore
@@ -54,7 +65,7 @@ function* sendAction(action) {
 
 export function* sessionSaga() {
     yield all([
-        yield takeLatest(GET_SESSION_AND_DRONE, getSessionAndDrone),
+        yield takeLatest(GET_SESSION_AND_DRONE_AND_ALL_RUNNING_ACTIONS, getSessionAndDroneAndRunningActions),
         yield takeLatest(SEND_ACTION, sendAction)
     ]);
 }

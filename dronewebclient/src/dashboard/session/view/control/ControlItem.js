@@ -10,6 +10,7 @@ import {
     Avatar
 } from '@material-ui/core';
 import { Send } from '@material-ui/icons';
+import { useTheme } from '@material-ui/styles';
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -18,25 +19,22 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const defaultProps = {
-    borderColor: 'primary.light',
-    border: 1
-};
-
 function Control(props) {
     const classes = useStyles();
 
-    // const { count, user } = useSelector(state => ({
-    //     count: state.counter.count,
-    //     user: state.user,
-    // }), shallowEqual);
+    const runningActions = useSelector(state => state.session.runningActions);
 
     const config = props.controlConfig;
 
     const dispatch = useDispatch();
 
     return (<div>
-        <Box display="flex" alignItems="center" borderRadius={16} {...defaultProps}>
+        <Box
+            display="flex"
+            alignItems="center"
+            borderRadius={16}
+            border={1}
+            borderColor={runningActions.length ? 'action.disabled' : 'primary.light'}>
             <Box p={1}>
                 <Avatar>{config.icon}</Avatar>
             </Box>
@@ -49,6 +47,7 @@ function Control(props) {
                     label="Number"
                     type="number"
                     variant="outlined"
+                    disabled={runningActions.length}
                 />
             </Box>
             <Box>
@@ -59,6 +58,7 @@ function Control(props) {
                     inputProps={{ step: 0.01 }}
                     endIcon={<Send />}
                     onClick={config.onClick}
+                    disabled={runningActions.length}
                 >Execute</Button>
             </Box>
         </Box>
