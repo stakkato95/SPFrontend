@@ -7,4 +7,4 @@ export const ActionType = {
     FLY_TO_RIGHT: 'FLY_TO_RIGHT',
     ROTATE_LEFT: 'ROTATE_LEFT',
     ROTATE_RIGHT: 'ROTATE_RIGHT'
-}
+};

@@ -16,6 +16,7 @@ import {
 import ControlItem from './ControlItem';
 import { sendAction } from '../../architecture/redux/SessionActions';
 import { ActionType } from '../../../../model/ActionType';
+import { listenActionSse } from '../../architecture/redux/SessionActions';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -96,6 +97,10 @@ function Control() {
             onClick: (value) => { dispatch(sendAction(ActionType.ROTATE_RIGHT, value)) }
         }
     ];
+
+    useEffect(() => {
+        dispatch(listenActionSse());
+    });
 
     // const { count, user } = useSelector(state => ({
     //     count: state.counter.count,

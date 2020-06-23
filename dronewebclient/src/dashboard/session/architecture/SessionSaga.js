@@ -1,15 +1,19 @@
-import { all, put, takeLatest, select } from 'redux-saga/effects';
-
+import { all, put, takeLatest, select, call, take } from 'redux-saga/effects';
 import { api } from '../../../api/ApiConfig';
+import { getSseChannel } from './EventStream';
+import { ActionState } from '../../../model/ActionState';
 
 import {
     setSessionAndDrone,
     addRunningAction,
-    addAllRunningActions
+    addAllRunningActions,
+    setActionRunning,
+    setActionFinished
 } from './redux/SessionActions';
 import {
     GET_SESSION_AND_DRONE_AND_ALL_RUNNING_ACTIONS,
-    SEND_ACTION
+    SEND_ACTION,
+    LISTEN_ACTION_SSE
 } from './redux/SessionActions';
 
 function* getSessionAndDroneAndRunningActions() {
@@ -50,22 +54,45 @@ function* sendAction(action) {
     const sessionId = state.session.session.id;
 
     try {
-        const startActionRequest = { 
-            sessionId: sessionId, 
-            actionType: action.actionType, 
+        const startActionRequest = {
+            sessionId: sessionId,
+            actionType: action.actionType,
             value: action.value
         };
         var serverResult = yield api().post('/action/start', startActionRequest);
-        yield put(addRunningAction(serverResult.data.payload));
+        //yield put(addRunningAction(serverResult.data.payload));
     } catch (e) {
         console.log(e);
         //ignore
     }
 }
 
+function* listenActionSse() {
+    const eventSrc = new EventSource('http://localhost:8080/api/action/getUpdates');
+    const channel = yield call(getSseChannel, eventSrc);
+    while (true) {
+        const msg = yield take(channel);
+        const action = JSON.parse(msg.data);
+        console.log(action);
+        switch (action.actionState) {
+            case ActionState.RUNNING:
+                yield put(setActionRunning(action));
+                break;
+            case ActionState.FINISHED:
+                yield put(setActionFinished(action));
+                break;
+            case ActionState.INTERRUPTED:
+
+                break;
+        }
+        //console.log(msg);
+    }
+}
+
 export function* sessionSaga() {
     yield all([
         yield takeLatest(GET_SESSION_AND_DRONE_AND_ALL_RUNNING_ACTIONS, getSessionAndDroneAndRunningActions),
-        yield takeLatest(SEND_ACTION, sendAction)
+        yield takeLatest(SEND_ACTION, sendAction),
+        yield takeLatest(LISTEN_ACTION_SSE, listenActionSse)
     ]);
 }
