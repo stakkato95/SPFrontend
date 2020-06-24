@@ -2,18 +2,21 @@ import { all, put, takeLatest, select, call, take } from 'redux-saga/effects';
 import { api } from '../../../api/ApiConfig';
 import { getSseChannel } from './EventStream';
 import { ActionState } from '../../../model/ActionState';
+import { SessionState } from '../../../model/SessionState';
 
 import {
     setSessionAndDrone,
     addRunningAction,
     addAllRunningActions,
     setActionRunning,
-    setActionFinished
+    setActionFinished,
+    setSessionInterrupted
 } from './redux/SessionActions';
 import {
     GET_SESSION_AND_DRONE_AND_ALL_RUNNING_ACTIONS,
     SEND_ACTION,
-    LISTEN_ACTION_SSE
+    LISTEN_ACTION_SSE,
+    LISTEN_SESSION_SSE
 } from './redux/SessionActions';
 
 function* getSessionAndDroneAndRunningActions() {
@@ -87,10 +90,31 @@ function* listenActionSse() {
     }
 }
 
+// function* listenSessionSse() {
+//     const eventSrc = new EventSource('http://localhost:8080/api/session/getUpdates');
+//     const channel = yield call(getSseChannel, eventSrc);
+//     while (true) {
+//         const msg = yield take(channel);
+//         const session = JSON.parse(msg.data);
+//         switch (session.sessionState) {
+//             case SessionState.RUNNING:
+//                 //TODO
+//                 break;
+//             case SessionState.FINISHED:
+//                 //TODO
+//                 break;
+//             case SessionState.INTERRUPTED:
+//                 yield put(setSessionInterrupted());
+//                 break;
+//         }
+//     }
+// }
+
 export function* sessionSaga() {
     yield all([
         yield takeLatest(GET_SESSION_AND_DRONE_AND_ALL_RUNNING_ACTIONS, getSessionAndDroneAndRunningActions),
         yield takeLatest(SEND_ACTION, sendAction),
-        yield takeLatest(LISTEN_ACTION_SSE, listenActionSse)
+        yield takeLatest(LISTEN_ACTION_SSE, listenActionSse),
+        // yield takeLatest(LISTEN_SESSION_SSE, listenSessionSse)
     ]);
 }

@@ -3,7 +3,8 @@ import {
     ADD_RUNNING_ACTION,
     ADD_ALL_RUNNING_ACTIONS,
     SET_ACTION_RUNNING,
-    SET_ACTION_FINISHED
+    SET_ACTION_FINISHED,
+    SET_SESSION_INTERRUPTED
 } from './SessionActions';
 
 export const sessionInitialState = {
@@ -31,6 +32,8 @@ export const sessionReducer = (state = sessionInitialState, action) => {
         case SET_ACTION_FINISHED:
             //TODO currently only one action can be run simultaneously
             return Object.assign({}, state, { runningActions: [] });
+        case SET_SESSION_INTERRUPTED:
+            return Object.assign({}, state, { session: {} });
     }
     return state;
 };

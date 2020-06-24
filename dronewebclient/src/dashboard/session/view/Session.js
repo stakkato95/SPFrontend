@@ -1,58 +1,73 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { Grid, Paper } from '@material-ui/core';
-import { withStyles } from '@material-ui/styles';
+import { Grid, Paper, Typography, makeStyles } from '@material-ui/core';
 
 import DroneInfo from './info/DroneInfo';
 import SessionInfo from './info/SessionInfo';
 import SessionDuration from './info/SessionDuration';
 import Control from './control/Control';
 
-import { getSessionAndDroneAndRunningActions } from '../architecture/redux/SessionActions';
+import { 
+    getSessionAndDroneAndRunningActions, 
+    listenSessionSse
+} from '../architecture/redux/SessionActions';
 
-const styles = theme => ({
+const useStyles = makeStyles((theme) => ({
     paper: {
         padding: '16px'
+    },
+    disabledContainer: {
+        // pointerEvents: 'none',
+        // opacity: 0.3
     }
-});
+}));
 
-class Session extends React.Component {
+function Session(props) {
+    const classes = useStyles();
 
-    componentDidMount() {
-        this.props.getSessionAndDroneAndRunningActions();
-    }
+    const dispatch = useDispatch();
 
-    render() {
-        const { classes } = this.props;
+    const session = useSelector(state => state.session.session);
 
-        return (<div>
-            <Grid container spacing={3}>
-                <Grid item xs={4}>
-                    <Paper className={classes.paper}>
-                        <DroneInfo />
-                    </Paper>
-                </Grid>
-                <Grid item xs={4}>
-                    <Paper className={classes.paper}>
-                        <SessionInfo />
-                    </Paper>
-                </Grid>
-                <Grid item xs={4}>
-                    <Paper className={classes.paper}>
-                        <SessionDuration />
-                    </Paper>
-                </Grid>
-                <Grid item xs={12}>
-                    <Paper className={classes.paper}>
-                        <Control />
-                    </Paper>
-                </Grid>
+    useEffect(() => {
+        dispatch(getSessionAndDroneAndRunningActions());
+        // dispatch(listenSessionSse());
+    });
+
+    return (<div>
+        <Grid container spacing={3} className={classes.disabledContainer}>
+            <Grid item xs={4}>
+                <Paper className={classes.paper}>
+                    <DroneInfo />
+                </Paper>
             </Grid>
-        </div>);
-    }
+            <Grid item xs={4}>
+                <Paper className={classes.paper}>
+                    <SessionInfo />
+                </Paper>
+            </Grid>
+            <Grid item xs={4}>
+                <Paper className={classes.paper}>
+                    <SessionDuration />
+                </Paper>
+            </Grid>
+            <Grid item xs={12}>
+                <Paper className={classes.paper}>
+                    <Control />
+                </Paper>
+            </Grid>
+        </Grid>
+        {/* <Typography
+            variant='subtitle1' gutterBottom
+            align='center'
+            style={{
+                display: session ? 'none' : 'block',
+                marginTop: '16px'
+            }}>
+            No registered drones.
+        </Typography> */}
+    </div>);
 }
 
-const mapDispatchToProps = { getSessionAndDroneAndRunningActions };
-
-export default withStyles(styles)(connect(null, mapDispatchToProps)(Session));
+export default Session;
