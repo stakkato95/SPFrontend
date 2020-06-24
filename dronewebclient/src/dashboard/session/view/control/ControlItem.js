@@ -19,6 +19,8 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+const INITIAL_CONTROL_VALUE = 0;
+
 function ControlItem(props) {
     const classes = useStyles();
 
@@ -27,6 +29,8 @@ function ControlItem(props) {
     const config = props.controlConfig;
 
     const dispatch = useDispatch();
+
+    const [controlValue, setControlValue] = useState(INITIAL_CONTROL_VALUE);
 
     return (<div>
         <Box
@@ -43,11 +47,12 @@ function ControlItem(props) {
             </Box>
             <Box p={1} flexShrink={1} style={{ display: config.configurable ? 'block' : 'none' }}>
                 <TextField
-                    id="standard-number"
+                    id="controlValue"
                     label="Number"
                     type="number"
                     variant="outlined"
                     disabled={runningActions.length}
+                    onChange={e => setControlValue(e.target.value)}
                 />
             </Box>
             <Box>
@@ -57,7 +62,7 @@ function ControlItem(props) {
                     className={classes.button}
                     inputProps={{ step: 0.01 }}
                     endIcon={<Send />}
-                    onClick={config.onClick}
+                    onClick={() => config.onClick(controlValue) }
                     disabled={runningActions.length}
                 >Execute</Button>
             </Box>

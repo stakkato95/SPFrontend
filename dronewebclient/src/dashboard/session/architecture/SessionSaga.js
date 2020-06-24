@@ -39,7 +39,6 @@ function* getSessionAndDroneAndRunningActions() {
 
     try {
         var serverResult = yield api().get(`/action/getAllRunning/${session.id}`);
-        console.log(serverResult.data);
         yield put(addAllRunningActions(serverResult.data.payload));
     } catch (e) {
         console.log(e);
@@ -54,6 +53,7 @@ function* sendAction(action) {
     const sessionId = state.session.session.id;
 
     try {
+        console.log(action);
         const startActionRequest = {
             sessionId: sessionId,
             actionType: action.actionType,
@@ -73,7 +73,6 @@ function* listenActionSse() {
     while (true) {
         const msg = yield take(channel);
         const action = JSON.parse(msg.data);
-        console.log(action);
         switch (action.actionState) {
             case ActionState.RUNNING:
                 yield put(setActionRunning(action));
@@ -85,7 +84,6 @@ function* listenActionSse() {
 
                 break;
         }
-        //console.log(msg);
     }
 }
 

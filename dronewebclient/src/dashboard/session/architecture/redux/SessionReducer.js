@@ -26,12 +26,10 @@ export const sessionReducer = (state = sessionInitialState, action) => {
             //TODO will be used in future, when multiple actions could be sent simultaneously
             let runningActions = state.runningActions.slice();
             runningActions.push(action.action);
-            console.log('RUNNING');
             return Object.assign({}, state, { runningActions: runningActions });
         }
         case SET_ACTION_FINISHED:
             //TODO currently only one action can be run simultaneously
-            console.log('FINISHED');
             return Object.assign({}, state, { runningActions: [] });
     }
     return state;

@@ -4,11 +4,10 @@ export function getSseChannel(eventSrc) {
     const subs = emitter => {
         eventSrc.onmessage = (msg) => {
             emitter(msg);
-            console.log('MSG');
         };
         eventSrc.onerror = () => {
             emitter(END);
-            console.log('ERROR');
+            console.log('Server Sent Event error');
         };
         return () => {
             eventSrc.close();
