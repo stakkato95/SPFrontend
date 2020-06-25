@@ -10,7 +10,7 @@ import {
     addAllRunningActions,
     setActionRunning,
     setActionFinished,
-    setSessionInterrupted
+    updateSession
 } from './redux/SessionActions';
 import {
     GET_SESSION_AND_DRONE_AND_ALL_RUNNING_ACTIONS,
@@ -56,7 +56,7 @@ function* sendAction(action) {
     const sessionId = state.session.session.id;
 
     try {
-        console.log(action);
+        //console.log(action);
         const startActionRequest = {
             sessionId: sessionId,
             actionType: action.actionType,
@@ -75,7 +75,12 @@ function* listenActionSse() {
     const channel = yield call(getSseChannel, eventSrc);
     while (true) {
         const msg = yield take(channel);
-        const action = JSON.parse(msg.data);
+        const databaseUpdate = JSON.parse(msg);
+        const action = databaseUpdate.object;
+        if (action === null) {
+            continue;
+        }
+        
         switch (action.actionState) {
             case ActionState.RUNNING:
                 yield put(setActionRunning(action));
@@ -84,37 +89,42 @@ function* listenActionSse() {
                 yield put(setActionFinished(action));
                 break;
             case ActionState.INTERRUPTED:
-
+                //TODO
                 break;
         }
     }
 }
 
-// function* listenSessionSse() {
-//     const eventSrc = new EventSource('http://localhost:8080/api/session/getUpdates');
-//     const channel = yield call(getSseChannel, eventSrc);
-//     while (true) {
-//         const msg = yield take(channel);
-//         const session = JSON.parse(msg.data);
-//         switch (session.sessionState) {
-//             case SessionState.RUNNING:
-//                 //TODO
-//                 break;
-//             case SessionState.FINISHED:
-//                 //TODO
-//                 break;
-//             case SessionState.INTERRUPTED:
-//                 yield put(setSessionInterrupted());
-//                 break;
-//         }
-//     }
-// }
+function* listenSessionSse() {
+    const eventSrc = new EventSource('http://localhost:8080/api/session/getUpdates');
+    const channel = yield call(getSseChannel, eventSrc);
+    while (true) {
+        const msg = yield take(channel);
+        const databaseUpdate = JSON.parse(msg);
+        const session = databaseUpdate.object;
+        if (session === null) {
+            continue;
+        }
+
+        switch (session.sessionState) {
+            case SessionState.RUNNING:
+                //TODO
+                break;
+            case SessionState.FINISHED:
+                //TODO
+                break;
+            case SessionState.INTERRUPTED:
+                yield put(updateSession(session));
+                break;
+        }
+    }
+}
 
 export function* sessionSaga() {
     yield all([
         yield takeLatest(GET_SESSION_AND_DRONE_AND_ALL_RUNNING_ACTIONS, getSessionAndDroneAndRunningActions),
         yield takeLatest(SEND_ACTION, sendAction),
         yield takeLatest(LISTEN_ACTION_SSE, listenActionSse),
-        // yield takeLatest(LISTEN_SESSION_SSE, listenSessionSse)
+        yield takeLatest(LISTEN_SESSION_SSE, listenSessionSse)
     ]);
 }

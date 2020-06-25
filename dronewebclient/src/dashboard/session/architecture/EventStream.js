@@ -3,7 +3,7 @@ import { eventChannel, END } from 'redux-saga';
 export function getSseChannel(eventSrc) {
     const subs = emitter => {
         eventSrc.onmessage = (msg) => {
-            emitter(msg);
+            emitter(msg.data);
         };
         eventSrc.onerror = () => {
             emitter(END);
