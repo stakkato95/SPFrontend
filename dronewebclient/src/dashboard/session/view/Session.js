@@ -8,7 +8,12 @@ import SessionInfo from './info/SessionInfo';
 import SessionDuration from './info/SessionDuration';
 import Control from './control/Control';
 
-import { getSessionAndDroneAndRunningActions, listenSessionSse, listenActionSse } from '../architecture/redux/SessionActions';
+import {
+    getSessionAndDroneAndRunningActions,
+    listenSessionSse,
+    listenActionSse
+} from '../architecture/redux/SessionActions';
+import { SessionState } from '../../../model/SessionState';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -30,7 +35,10 @@ function Session(props) {
     const classes = useStyles();
 
     return (<div>
-        <Grid container spacing={3}>
+        <Grid container spacing={3} style={{
+            pointerEvents: session.sessionState === SessionState.RUNNING ? 'auto' : 'none',
+            opacity: session.sessionState === SessionState.RUNNING ? 1 : 0.3
+        }}>
             <Grid item xs={4}>
                 <Paper className={classes.paper}>
                     <DroneInfo />
