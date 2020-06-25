@@ -1,7 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { Typography, List, ListItem, ListItemText, ListItemAvatar, Avatar } from '@material-ui/core';
+import { 
+    Typography, 
+    List, 
+    ListItem, 
+    ListItemText, 
+    ListItemAvatar, 
+    Avatar,
+    Button,
+    Box
+} from '@material-ui/core';
 import { Memory, QueryBuilder, Timeline, Flight } from '@material-ui/icons';
 
 class SessionInfo extends React.Component {
@@ -43,6 +52,9 @@ class SessionInfo extends React.Component {
                     <ListItemText primary={this.props.session.flightState} secondary="Flight state" />
                 </ListItem>
             </List>
+            <Box display="flex" flexDirection="row-reverse">
+                <Button variant="outlined" color="secondary">Stop session</Button>
+            </Box>
         </>);
     }
 }

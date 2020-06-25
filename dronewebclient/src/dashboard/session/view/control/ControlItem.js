@@ -57,7 +57,7 @@ function ControlItem(props) {
             </Box>
             <Box>
                 <Button
-                    variant="contained"
+                    variant="outlined"
                     color="primary"
                     className={classes.button}
                     inputProps={{ step: 0.01 }}

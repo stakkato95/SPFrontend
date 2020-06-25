@@ -88,7 +88,7 @@ function UnregisteredListItem(props) {
                                 </Table>
                             <Box display="flex" flexDirection="row-reverse">
                                 <Button 
-                                    variant="contained" 
+                                    variant="outlined" 
                                     color="primary" 
                                     className={classes.button} 
                                     endIcon={<Add />}
