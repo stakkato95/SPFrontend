@@ -1,5 +1,5 @@
 import {
-    SET_SESSION_AND_DRONE,
+    SET_SESSION_INITIAL_STATE,
     ADD_RUNNING_ACTION,
     ADD_ALL_RUNNING_ACTIONS,
     SET_ACTION_RUNNING,
@@ -16,7 +16,7 @@ export const sessionInitialState = {
 
 export const sessionReducer = (state = sessionInitialState, action) => {
     switch (action.type) {
-        case SET_SESSION_AND_DRONE:
+        case SET_SESSION_INITIAL_STATE:
             return Object.assign({}, state, { session: action.session, drone: action.drone });
         case ADD_RUNNING_ACTION:
             let runningActions = state.runningActions.slice();

@@ -18,7 +18,7 @@ import SessionDuration from './info/SessionDuration';
 import Control from './control/Control';
 
 import {
-    getSessionAndDroneAndRunningActions,
+    getSessionInitialState,
     listenSessionSse,
     listenActionSse,
     clearInterruptedSession
@@ -41,7 +41,7 @@ function Session(props) {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getSessionAndDroneAndRunningActions());
+        dispatch(getSessionInitialState());
         dispatch(listenSessionSse());
         dispatch(listenActionSse());
     }, []);

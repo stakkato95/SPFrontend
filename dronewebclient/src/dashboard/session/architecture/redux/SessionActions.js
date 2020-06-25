@@ -1,5 +1,6 @@
-export const GET_SESSION_AND_DRONE_AND_ALL_RUNNING_ACTIONS = 'GET_SESSION_AND_DRONE_AND_ALL_RUNNING_ACTIONS';
+export const GET_SESSION_INITIAL_STATE = 'GET_SESSION_INITIAL_STATE';
 export const SET_SESSION_AND_DRONE = 'SET_SESSION_AND_DRONE';
+export const SET_SESSION_INITIAL_STATE = 'SET_SESSION_INITIAL_STATE';
 
 export const SEND_ACTION = 'SEND_ACTION';
 export const ADD_RUNNING_ACTION = 'ADD_RUNNING_ACTION';
@@ -13,9 +14,15 @@ export const CLEAR_INTERRUPTED_SESSION = 'CLEAR_INTERRUPTED_SESSION';
 
 export const START_SESSION = 'START_SESSION';
 
-export const getSessionAndDroneAndRunningActions = () => ({ type: GET_SESSION_AND_DRONE_AND_ALL_RUNNING_ACTIONS });
+export const getSessionInitialState = () => ({ type: GET_SESSION_INITIAL_STATE });
 export const setSessionAndDrone = (session, drone) => ({
     type: SET_SESSION_AND_DRONE,
+    session: session,
+    drone: drone
+});
+
+export const setSessionInitialState = (session, drone) => ({
+    type: SET_SESSION_INITIAL_STATE,
     session: session,
     drone: drone
 });

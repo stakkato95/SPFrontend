@@ -5,7 +5,7 @@ import { ActionState } from '../../../model/ActionState';
 import { SessionState } from '../../../model/SessionState';
 
 import {
-    setSessionAndDrone,
+    setSessionInitialState,
     addRunningAction,
     addAllRunningActions,
     setActionRunning,
@@ -13,14 +13,14 @@ import {
     updateSession
 } from './redux/SessionActions';
 import {
-    GET_SESSION_AND_DRONE_AND_ALL_RUNNING_ACTIONS,
+    GET_SESSION_INITIAL_STATE,
     SEND_ACTION,
     LISTEN_ACTION_SSE,
     LISTEN_SESSION_SSE,
     START_SESSION
 } from './redux/SessionActions';
 
-function* getSessionAndDroneAndRunningActions() {
+function* getSessionInitialState() {
     const state = yield select();
 
     let session = {};
@@ -49,7 +49,7 @@ function* getSessionAndDroneAndRunningActions() {
         //ignore
     }
 
-    yield put(setSessionAndDrone(session, drone));
+    yield put(setSessionInitialState(session, drone));
 }
 
 function* sendAction(action) {
@@ -130,7 +130,7 @@ function* startSession(action) {
 
 export function* sessionSaga() {
     yield all([
-        yield takeLatest(GET_SESSION_AND_DRONE_AND_ALL_RUNNING_ACTIONS, getSessionAndDroneAndRunningActions),
+        yield takeLatest(GET_SESSION_INITIAL_STATE, getSessionInitialState),
         yield takeLatest(SEND_ACTION, sendAction),
         yield takeLatest(LISTEN_ACTION_SSE, listenActionSse),
         yield takeLatest(LISTEN_SESSION_SSE, listenSessionSse),
