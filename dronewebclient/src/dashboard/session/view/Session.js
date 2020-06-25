@@ -71,8 +71,8 @@ function Session(props) {
                             color="inherit"
                             size="small"
                             onClick={() => {
-                                //history.push('/drones/registered');
-                                //dispatch(clearInterruptedSession());
+                                dispatch(clearInterruptedSession());
+                                history.push('/drones/registered');
                             }}>
                             <Close fontSize="inherit" />
                         </IconButton>

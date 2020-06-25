@@ -34,9 +34,10 @@ export const sessionReducer = (state = sessionInitialState, action) => {
             //TODO currently only one action can be run simultaneously
             return Object.assign({}, state, { runningActions: [] });
         case UPDATE_SESSION:
-            console.log('INTERRUPTED');
+            console.log('INTERRUPTED UPDATED');
             return Object.assign({}, state, { session: action.session });
         case CLEAR_INTERRUPTED_SESSION:
+            console.log('INTERRUPTED CLEARED');
             return Object.assign({}, state, { session: {} });
     }
     return state;
