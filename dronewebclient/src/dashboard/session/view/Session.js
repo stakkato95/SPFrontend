@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Grid, Paper, makeStyles } from '@material-ui/core';
-import { withStyles } from '@material-ui/styles';
 
 import DroneInfo from './info/DroneInfo';
 import SessionInfo from './info/SessionInfo';
@@ -16,12 +15,6 @@ const useStyles = makeStyles((theme) => ({
         padding: '16px'
     }
 }));
-
-const styles = theme => ({
-    paper: {
-        padding: '16px'
-    }
-});
 
 function Session(props) {
     const session = useSelector(state => state.session.session);
