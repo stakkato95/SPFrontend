@@ -1,4 +1,6 @@
 import moment from 'moment';
+import { getSseChannel } from './EventStream';
+import { call, take } from 'redux-saga/effects';
 
 export function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -33,4 +35,20 @@ function pad(num, places) {
 
 export function isEmptyObj(obj) {
     return Object.keys(obj).length === 0;
+}
+
+export function* listenServerSentEvent(path, callback) {
+    const eventSrc = new EventSource(`http://localhost:8080/api${path}`);
+    const channel = yield call(getSseChannel, eventSrc);
+
+    while (true) {
+        const msg = yield take(channel);
+        const databaseUpdate = JSON.parse(msg);
+        const updateObj = databaseUpdate.object;
+        if (updateObj === null) {
+            continue;
+        }
+        
+        yield callback(updateObj);
+    }
 }

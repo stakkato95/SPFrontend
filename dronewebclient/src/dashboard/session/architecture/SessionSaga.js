@@ -1,9 +1,7 @@
-import { all, put, takeLatest, select, call, take } from 'redux-saga/effects';
+import { all, put, takeLatest, select } from 'redux-saga/effects';
 import { api } from '../../../api/ApiConfig';
-import { getSseChannel } from './EventStream';
 import { ActionState } from '../../../model/ActionState';
-import { SessionState } from '../../../model/SessionState';
-import { isEmptyObj, toMillisecondsTime, toShortTime } from '../../../helper/CommonHelper';
+import { isEmptyObj, toMillisecondsTime, listenServerSentEvent } from '../../../helper/CommonHelper';
 
 import {
     setSessionInitialState,
@@ -72,16 +70,7 @@ function* sendAction(action) {
 }
 
 function* listenActionSse() {
-    const eventSrc = new EventSource('http://localhost:8080/api/action/getUpdates');
-    const channel = yield call(getSseChannel, eventSrc);
-    while (true) {
-        const msg = yield take(channel);
-        const databaseUpdate = JSON.parse(msg);
-        const action = databaseUpdate.object;
-        if (action === null) {
-            continue;
-        }
-        
+    yield listenServerSentEvent('/action/getUpdates', function* (action) {
         switch (action.actionState) {
             case ActionState.RUNNING:
                 yield put(setActionRunning(action));
@@ -93,33 +82,13 @@ function* listenActionSse() {
                 //TODO
                 break;
         }
-    }
+    });
 }
 
 function* listenSessionSse() {
-    const eventSrc = new EventSource('http://localhost:8080/api/session/getUpdates');
-    const channel = yield call(getSseChannel, eventSrc);
-    while (true) {
-        const msg = yield take(channel);
-        const databaseUpdate = JSON.parse(msg);
-        const session = databaseUpdate.object;
-        if (session === null) {
-            continue;
-        }
-
+    yield listenServerSentEvent('/session/getUpdates', function* (session) {
         yield put(updateSession(session));
-        // switch (session.sessionState) {
-        //     case SessionState.RUNNING:
-        //         //TODO
-        //         break;
-        //     case SessionState.FINISHED:
-        //         yield put(updateSession(session));
-        //         break;
-        //     case SessionState.INTERRUPTED:
-        //         yield put(updateSession(session));
-        //         break;
-        // }
-    }
+    });
 }
 
 function* startSession(action) {
@@ -143,20 +112,10 @@ function* stopSession(action) {
 }
 
 function* listenDroneSse() {
-    const eventSrc = new EventSource('http://localhost:8080/api/drone/getUpdates');
-    const channel = yield call(getSseChannel, eventSrc);
-    while (true) {
-        const msg = yield take(channel);
-        const databaseUpdate = JSON.parse(msg);
-        const drone = databaseUpdate.object;
-        if (drone === null) {
-            continue;
-        }
-
+    yield listenServerSentEvent('/drone/getUpdates', function* (drone) {
         drone.lastSeenTime = toMillisecondsTime(drone.lastSeenTime);
-        // console.log(toShortTime(drone.lastSeenTime));
         yield put(updateDrone(drone));
-    }
+    });
 }
 
 export function* sessionSaga() {
