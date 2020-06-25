@@ -9,6 +9,7 @@ export const SET_ACTION_RUNNING = 'SET_ACTION_RUNNING';
 export const SET_ACTION_FINISHED = 'SET_ACTION_FINISHED';
 export const UPDATE_SESSION = 'UPDATE_SESSION';
 export const LISTEN_SESSION_SSE = 'LISTEN_SESSION_SSE';
+export const CLEAR_INTERRUPTED_SESSION = 'CLEAR_INTERRUPTED_SESSION';
 
 export const getSessionAndDroneAndRunningActions = () => ({ type: GET_SESSION_AND_DRONE_AND_ALL_RUNNING_ACTIONS });
 export const setSessionAndDrone = (session, drone) => ({
@@ -29,3 +30,5 @@ export const setActionRunning = (action) => ({ type: SET_ACTION_RUNNING, action:
 export const setActionFinished = (action) => ({ type: SET_ACTION_FINISHED, action: action });
 export const updateSession = (session) => ({ type: UPDATE_SESSION, session: session });
 export const listenSessionSse = () => ({ type: LISTEN_SESSION_SSE });
+
+export const clearInterruptedSession = () => ({ type: CLEAR_INTERRUPTED_SESSION });

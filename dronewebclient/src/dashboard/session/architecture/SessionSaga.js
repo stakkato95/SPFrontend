@@ -52,18 +52,20 @@ function* getSessionAndDroneAndRunningActions() {
 }
 
 function* sendAction(action) {
+    console.log('SEND');
+
     const state = yield select();
     const sessionId = state.session.session.id;
 
     try {
-        //console.log(action);
+        console.log(action);
         const startActionRequest = {
             sessionId: sessionId,
-            actionType: action.actionType,
-            value: action.value
+            actionType: action.actionType
         };
+        console.log(startActionRequest);
         var serverResult = yield api().post('/action/start', startActionRequest);
-        //yield put(addRunningAction(serverResult.data.payload));
+        console.log(serverResult.data);
     } catch (e) {
         console.log(e);
         //ignore
