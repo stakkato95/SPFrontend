@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { withRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 import clsx from 'clsx';
@@ -14,18 +15,20 @@ import {
   Badge,
   Container,
   Link,
-  ListItem, 
-  ListItemIcon, 
+  ListItem,
+  ListItemIcon,
   ListItemText
 } from '@material-ui/core';
-import { 
-  Menu, 
-  ChevronLeft, 
-  Notifications, 
-  Contactless, 
-  SettingsEthernet, 
+import {
+  Menu,
+  ChevronLeft,
+  Notifications,
+  Contactless,
+  SettingsEthernet,
   History
 } from '@material-ui/icons';
+
+import { getSessionInitialState } from './session/architecture/redux/SessionActions';
 
 import Drones from './drones/view/Drones';
 import Session from './session/view/Session';
@@ -126,7 +129,13 @@ function Dashboard(props) {
   };
 
   const { history } = props;
-  
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getSessionInitialState());
+  });
+
   const itemsList = [
     {
       text: 'Drones',
@@ -196,7 +205,7 @@ function Dashboard(props) {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-        {/* <Drones/> */}
+          {/* <Drones/> */}
           <Switch>
             <Redirect exact from="/" to="/drones" />
 
