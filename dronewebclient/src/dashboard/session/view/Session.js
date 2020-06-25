@@ -50,7 +50,6 @@ function Session(props) {
     const classes = useStyles();
 
     const { history } = props;
-    console.log(history);
 
     if (session === null) {
         return (<div>

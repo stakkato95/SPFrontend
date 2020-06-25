@@ -3,11 +3,10 @@ import { api } from '../../../api/ApiConfig';
 import { getSseChannel } from './EventStream';
 import { ActionState } from '../../../model/ActionState';
 import { SessionState } from '../../../model/SessionState';
+import { isEmptyObj } from '../../../helper/CommonHelper';
 
 import {
     setSessionInitialState,
-    addRunningAction,
-    addAllRunningActions,
     setActionRunning,
     setActionFinished,
     updateSession
@@ -41,15 +40,18 @@ function* getSessionInitialState() {
         //ignore
     }
 
+    let runningActions = {};
     try {
         var serverResult = yield api().get(`/action/getAllRunning/${session.id}`);
-        yield put(addAllRunningActions(serverResult.data.payload));
+        runningActions = isEmptyObj(serverResult.data.payload) ? [] : serverResult.data.payload;
     } catch (e) {
         console.log(e);
         //ignore
     }
+    console.log('RUNNING ACTIONS');
+    console.log(runningActions);
 
-    yield put(setSessionInitialState(session, drone));
+    yield put(setSessionInitialState({ session: session, drone: drone, runningActions: runningActions }));
 }
 
 function* sendAction(action) {
@@ -59,9 +61,11 @@ function* sendAction(action) {
     try {
         const startActionRequest = {
             sessionId: sessionId,
-            actionType: action.actionType
+            // actionType: action.actionType
         };
+        console.log('ACTION ATTEMPT');
         var serverResult = yield api().post('/action/start', startActionRequest);
+        console.log('ACTION SENT');
     } catch (e) {
         console.log(e);
         //ignore

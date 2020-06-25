@@ -24,3 +24,7 @@ export function getTimeDifference(startTime) {
 function pad(num, places) {
     return String(num).padStart(places, '0');
 }
+
+export function isEmptyObj(obj) {
+    return Object.keys(obj).length === 0;
+}

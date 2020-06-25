@@ -3,8 +3,6 @@ export const SET_SESSION_AND_DRONE = 'SET_SESSION_AND_DRONE';
 export const SET_SESSION_INITIAL_STATE = 'SET_SESSION_INITIAL_STATE';
 
 export const SEND_ACTION = 'SEND_ACTION';
-export const ADD_RUNNING_ACTION = 'ADD_RUNNING_ACTION';
-export const ADD_ALL_RUNNING_ACTIONS = 'ADD_ALL_RUNNING_ACTIONS';
 export const LISTEN_ACTION_SSE = 'LISTEN_ACTION_SSE';
 export const SET_ACTION_RUNNING = 'SET_ACTION_RUNNING';
 export const SET_ACTION_FINISHED = 'SET_ACTION_FINISHED';
@@ -21,10 +19,9 @@ export const setSessionAndDrone = (session, drone) => ({
     drone: drone
 });
 
-export const setSessionInitialState = (session, drone) => ({
+export const setSessionInitialState = (sessionInitState) => ({ 
     type: SET_SESSION_INITIAL_STATE,
-    session: session,
-    drone: drone
+    sessionInitState: sessionInitState
 });
 
 export const sendAction = (actionType, value) => ({
@@ -32,8 +29,6 @@ export const sendAction = (actionType, value) => ({
     actionType: actionType,
     value: value
 });
-export const addRunningAction = (runningAction) => ({ type: ADD_RUNNING_ACTION, runningAction: runningAction });
-export const addAllRunningActions = (runningActions) => ({ type: ADD_ALL_RUNNING_ACTIONS, runningActions: runningActions });
 export const listenActionSse = () => ({ type: LISTEN_ACTION_SSE });
 export const setActionRunning = (action) => ({ type: SET_ACTION_RUNNING, action: action });
 export const setActionFinished = (action) => ({ type: SET_ACTION_FINISHED, action: action });

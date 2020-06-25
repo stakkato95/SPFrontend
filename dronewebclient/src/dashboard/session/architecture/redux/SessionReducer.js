@@ -1,7 +1,5 @@
 import {
     SET_SESSION_INITIAL_STATE,
-    ADD_RUNNING_ACTION,
-    ADD_ALL_RUNNING_ACTIONS,
     SET_ACTION_RUNNING,
     SET_ACTION_FINISHED,
     UPDATE_SESSION,
@@ -17,13 +15,9 @@ export const sessionInitialState = {
 export const sessionReducer = (state = sessionInitialState, action) => {
     switch (action.type) {
         case SET_SESSION_INITIAL_STATE:
-            return Object.assign({}, state, { session: action.session, drone: action.drone });
-        case ADD_RUNNING_ACTION:
-            let runningActions = state.runningActions.slice();
-            runningActions.push(action.runningAction);
-            return Object.assign({}, state, { runningActions: runningActions });
-        case ADD_ALL_RUNNING_ACTIONS:
-            return Object.assign({}, state, { runningActions: action.runningActions });
+            const init = action.sessionInitState;
+            console.log(init);
+            return Object.assign({}, state, { session: init.session, drone: init.drone, runningActions: init.runningActions });
         case SET_ACTION_RUNNING: {
             //TODO will be used in future, when multiple actions could be sent simultaneously
             let runningActions = state.runningActions.slice();
