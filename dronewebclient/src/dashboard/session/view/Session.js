@@ -16,6 +16,7 @@ import DroneInfo from './info/DroneInfo';
 import SessionInfo from './info/SessionInfo';
 import SessionDuration from './info/SessionDuration';
 import Control from './control/Control';
+import SessionAlert from './SessionAlert';
 
 import {
     getSessionInitialState,
@@ -70,40 +71,18 @@ function Session(props) {
 
     return (<div>
         {isSessionInterrupted() &&
-            <Collapse in={true} className={classes.alert}>
-                <Alert
-                    severity="error"
-                    action={
-                        <IconButton
-                            aria-label="close"
-                            color="inherit"
-                            size="small"
-                            onClick={onAlertClick}>
-                            <Close fontSize="inherit" />
-                        </IconButton>
-                    }>
-                    <AlertTitle>Session was interrupted</AlertTitle>
-                    You can go to the list of <strong>all registered drones</strong> and check state of your drone!
-                </Alert>
-            </Collapse>
+            <SessionAlert
+                severity={'error'}
+                onAlertClick={onAlertClick}
+                title={'Session was interrupted'}
+                text={<span>You can go to the list of <strong>all registered drones</strong> and check state of your drone!</span>} />
         }
         {isSessionFinished() &&
-            <Collapse in={true} className={classes.alert}>
-                <Alert
-                    severity="success"
-                    action={
-                        <IconButton
-                            aria-label="close"
-                            color="inherit"
-                            size="small"
-                            onClick={onAlertClick}>
-                            <Close fontSize="inherit" />
-                        </IconButton>
-                    }>
-                    <AlertTitle>Session was succesfully finished</AlertTitle>
-                    You can check information about this session in the <strong>History</strong>!
-                </Alert>
-            </Collapse>
+            <SessionAlert
+            severity={'success'}
+            onAlertClick={onAlertClick}
+            title={'Session was succesfully finished'}
+            text={<span>You can check information about this session in the <strong>History</strong>!</span>} />
         }
         <Grid container spacing={3} style={{
             pointerEvents: isSessionRunning() ? 'auto' : 'none',

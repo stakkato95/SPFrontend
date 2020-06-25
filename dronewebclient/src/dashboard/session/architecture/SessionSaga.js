@@ -132,19 +132,8 @@ function* startSession(action) {
 
 function* stopSession(action) {
     try {
-        console.log('SAGA CALLED');
         const req = { sessionId: action.sessionId };
         var serverResult = yield api().post('/session/stopSession', req);
-        //TODO TEST ENDPOINT 
-        //TODO TEST ENDPOINT 
-        //TODO TEST ENDPOINT 
-        //TODO TEST ENDPOINT 
-        //TODO TEST ENDPOINT 
-        //TODO TEST ENDPOINT 
-        //TODO TEST ENDPOINT 
-        //TODO TEST ENDPOINT 
-        //TODO TEST ENDPOINT 
-        console.log('SAGA FINISHED');
     } catch (e) {
         console.log(e);
         //ignore
