@@ -74,8 +74,10 @@ function* listenActionSse() {
     const eventSrc = new EventSource('http://localhost:8080/api/action/getUpdates');
     const channel = yield call(getSseChannel, eventSrc);
     while (true) {
+        console.log('STARTED LISTENING ACIONS...');
         const msg = yield take(channel);
         const databaseUpdate = JSON.parse(msg);
+        console.log(databaseUpdate)
         const action = databaseUpdate.object;
         if (action === null) {
             continue;
@@ -105,6 +107,7 @@ function* listenSessionSse() {
         if (session === null) {
             continue;
         }
+        console.log(session);
 
         switch (session.sessionState) {
             case SessionState.RUNNING:

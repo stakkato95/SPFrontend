@@ -98,9 +98,9 @@ function Control() {
         }
     ];
 
-    useEffect(() => {
-        dispatch(listenActionSse());
-    });
+    // useEffect(() => {
+    //     dispatch(listenActionSse());
+    // });
 
     // const { count, user } = useSelector(state => ({
     //     count: state.counter.count,
