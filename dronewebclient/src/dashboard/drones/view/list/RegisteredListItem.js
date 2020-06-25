@@ -1,13 +1,15 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Collapse, Typography, IconButton, Button, Grid } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import { KeyboardArrowDown, KeyboardArrowUp, Add } from '@material-ui/icons';
 
 import { startSession } from '../../../session/architecture/redux/SessionActions';
+import { SessionState } from '../../../../model/SessionState';
 
 const useRowStyles = makeStyles((theme) => ({
     root: {
@@ -20,12 +22,18 @@ const useRowStyles = makeStyles((theme) => ({
     },
     table: {
         // maxWidth: 400
+    },
+    alert: {
+        marginBottom: '16px'
     }
 }));
 
 function RegisteredListItem(props) {
     const { row } = props;
     const [expanded, setExpanded] = React.useState(false);
+
+    const session = useSelector(state => state.session.session);
+    const runningSessionExists = () => session !== null && session.sessionState === SessionState.RUNNING;
 
     const classes = useRowStyles();
 
@@ -94,17 +102,24 @@ function RegisteredListItem(props) {
                                 </Table>
                             </Grid>
                         </Grid>
-                        <Box display="flex" flexDirection="row-reverse">
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                className={classes.button}
-                                endIcon={<Add />}
-                                onClick={() => {
-                                    dispatch(startSession(row.id));
-                                    history.push('/session');
-                                }}>Start session</Button>
-                        </Box>
+                        {!runningSessionExists() &&
+                            <Box display="flex" flexDirection="row-reverse">
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    className={classes.button}
+                                    endIcon={<Add />}
+                                    onClick={() => {
+                                        dispatch(startSession(row.id));
+                                        history.push('/session');
+                                    }}>Start session</Button>
+                            </Box>
+                        }
+                        {runningSessionExists() &&
+                            <Alert severity="info" className={classes.alert}>
+                                This drone is running session <strong>{session.id}</strong>
+                            </Alert>
+                        }
                     </Collapse>
                 </TableCell>
             </TableRow>
