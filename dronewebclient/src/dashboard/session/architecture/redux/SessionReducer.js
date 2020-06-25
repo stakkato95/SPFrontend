@@ -3,7 +3,7 @@ import {
     SET_ACTION_RUNNING,
     SET_ACTION_FINISHED,
     UPDATE_SESSION,
-    CLEAR_INTERRUPTED_SESSION
+    CLEAR_SESSION
 } from './SessionActions';
 
 export const sessionInitialState = {
@@ -28,7 +28,7 @@ export const sessionReducer = (state = sessionInitialState, action) => {
             return Object.assign({}, state, { runningActions: [] });
         case UPDATE_SESSION:
             return Object.assign({}, state, { session: action.session });
-        case CLEAR_INTERRUPTED_SESSION:
+        case CLEAR_SESSION:
             return Object.assign({}, state, { session: {} });
     }
     return state;

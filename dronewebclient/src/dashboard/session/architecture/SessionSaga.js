@@ -16,7 +16,8 @@ import {
     SEND_ACTION,
     LISTEN_ACTION_SSE,
     LISTEN_SESSION_SSE,
-    START_SESSION
+    START_SESSION,
+    STOP_SESSION
 } from './redux/SessionActions';
 
 function* getSessionInitialState() {
@@ -104,24 +105,46 @@ function* listenSessionSse() {
             continue;
         }
 
-        switch (session.sessionState) {
-            case SessionState.RUNNING:
-                //TODO
-                break;
-            case SessionState.FINISHED:
-                //TODO
-                break;
-            case SessionState.INTERRUPTED:
-                yield put(updateSession(session));
-                break;
-        }
+        yield put(updateSession(session));
+        // switch (session.sessionState) {
+        //     case SessionState.RUNNING:
+        //         //TODO
+        //         break;
+        //     case SessionState.FINISHED:
+        //         yield put(updateSession(session));
+        //         break;
+        //     case SessionState.INTERRUPTED:
+        //         yield put(updateSession(session));
+        //         break;
+        // }
     }
 }
 
 function* startSession(action) {
     try {
-        const startSessionRequest = { droneId: action.droneId };
-        var serverResult = yield api().post('/session/startSession', startSessionRequest);
+        const req = { droneId: action.droneId };
+        var serverResult = yield api().post('/session/startSession', req);
+    } catch (e) {
+        console.log(e);
+        //ignore
+    }
+}
+
+function* stopSession(action) {
+    try {
+        console.log('SAGA CALLED');
+        const req = { sessionId: action.sessionId };
+        var serverResult = yield api().post('/session/stopSession', req);
+        //TODO TEST ENDPOINT 
+        //TODO TEST ENDPOINT 
+        //TODO TEST ENDPOINT 
+        //TODO TEST ENDPOINT 
+        //TODO TEST ENDPOINT 
+        //TODO TEST ENDPOINT 
+        //TODO TEST ENDPOINT 
+        //TODO TEST ENDPOINT 
+        //TODO TEST ENDPOINT 
+        console.log('SAGA FINISHED');
     } catch (e) {
         console.log(e);
         //ignore
@@ -134,6 +157,7 @@ export function* sessionSaga() {
         yield takeLatest(SEND_ACTION, sendAction),
         yield takeLatest(LISTEN_ACTION_SSE, listenActionSse),
         yield takeLatest(LISTEN_SESSION_SSE, listenSessionSse),
-        yield takeLatest(START_SESSION, startSession)
+        yield takeLatest(START_SESSION, startSession),
+        yield takeLatest(STOP_SESSION, stopSession)
     ]);
 }

@@ -21,7 +21,7 @@ import {
     getSessionInitialState,
     listenSessionSse,
     listenActionSse,
-    clearInterruptedSession
+    clearSession
 } from '../architecture/redux/SessionActions';
 import { SessionState } from '../../../model/SessionState';
 
@@ -31,12 +31,17 @@ const useStyles = makeStyles((theme) => ({
     },
     emptyText: {
         marginTop: '16px'
+    },
+    alert: {
+        padding: '16px'
     }
 }));
 
 function Session(props) {
     const session = useSelector(state => state.session.session);
     const isSessionRunning = () => session.sessionState === SessionState.RUNNING;
+    const isSessionInterrupted = () => session.sessionState === SessionState.INTERRUPTED;
+    const isSessionFinished = () => session.sessionState === SessionState.FINISHED;
 
     const dispatch = useDispatch();
 
@@ -46,6 +51,10 @@ function Session(props) {
         dispatch(listenActionSse());
     }, []);
 
+    const onAlertClick = () => {
+        dispatch(clearSession());
+        history.push('/drones/registered');
+    };
 
     const classes = useStyles();
 
@@ -60,8 +69,8 @@ function Session(props) {
     }
 
     return (<div>
-        {!isSessionRunning() &&
-            <Collapse in={!isSessionRunning()} style={{ padding: '16px' }}>
+        {isSessionInterrupted() &&
+            <Collapse in={true} className={classes.alert}>
                 <Alert
                     severity="error"
                     action={
@@ -69,10 +78,7 @@ function Session(props) {
                             aria-label="close"
                             color="inherit"
                             size="small"
-                            onClick={() => {
-                                dispatch(clearInterruptedSession());
-                                history.push('/drones/registered');
-                            }}>
+                            onClick={onAlertClick}>
                             <Close fontSize="inherit" />
                         </IconButton>
                     }>
@@ -81,10 +87,24 @@ function Session(props) {
                 </Alert>
             </Collapse>
         }
-
-
-
-
+        {isSessionFinished() &&
+            <Collapse in={true} className={classes.alert}>
+                <Alert
+                    severity="success"
+                    action={
+                        <IconButton
+                            aria-label="close"
+                            color="inherit"
+                            size="small"
+                            onClick={onAlertClick}>
+                            <Close fontSize="inherit" />
+                        </IconButton>
+                    }>
+                    <AlertTitle>Session was succesfully finished</AlertTitle>
+                    You can check information about this session in the <strong>History</strong>!
+                </Alert>
+            </Collapse>
+        }
         <Grid container spacing={3} style={{
             pointerEvents: isSessionRunning() ? 'auto' : 'none',
             opacity: isSessionRunning() ? 1 : 0.3
