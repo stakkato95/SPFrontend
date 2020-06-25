@@ -4,6 +4,7 @@ import { api } from '../../../api/ApiConfig';
 
 import { toShortTime } from '../../../helper/CommonHelper';
 
+import { startSession } from '../../session/architecture/redux/SessionActions';
 import {
     setRegisteredDrones,
     setUnregisteredDrones,
@@ -61,18 +62,7 @@ function* registerDrone() {
     }
 
     if (state.drone.newDroneSessionAutoStart) {
-        try {
-            const sessionInit = { droneId: serverResult.data.payload.id };
-            var serverResult = yield api().post('/session/startSession', sessionInit);
-            if (serverResult.data.successful) {
-                //TODO
-            } else {
-                //TODO
-            }
-        } catch (e) {
-            console.log(e);
-            //TODO
-        }
+        yield put(startSession(serverResult.data.payload.id));
     }
 
     yield put(setDroneRegistrationInProgress(false));

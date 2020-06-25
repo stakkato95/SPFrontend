@@ -11,6 +11,8 @@ export const UPDATE_SESSION = 'UPDATE_SESSION';
 export const LISTEN_SESSION_SSE = 'LISTEN_SESSION_SSE';
 export const CLEAR_INTERRUPTED_SESSION = 'CLEAR_INTERRUPTED_SESSION';
 
+export const START_SESSION = 'START_SESSION';
+
 export const getSessionAndDroneAndRunningActions = () => ({ type: GET_SESSION_AND_DRONE_AND_ALL_RUNNING_ACTIONS });
 export const setSessionAndDrone = (session, drone) => ({
     type: SET_SESSION_AND_DRONE,
@@ -32,3 +34,5 @@ export const updateSession = (session) => ({ type: UPDATE_SESSION, session: sess
 export const listenSessionSse = () => ({ type: LISTEN_SESSION_SSE });
 
 export const clearInterruptedSession = () => ({ type: CLEAR_INTERRUPTED_SESSION });
+
+export const startSession = (droneId) => ({ type: START_SESSION, droneId: droneId });

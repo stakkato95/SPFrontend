@@ -1,11 +1,13 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Collapse, Typography, IconButton, Button, Grid } from '@material-ui/core';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import { KeyboardArrowDown, KeyboardArrowUp, Add } from '@material-ui/icons';
 
-import { connect } from 'react-redux';
+import { startSession } from '../../../session/architecture/redux/SessionActions';
 
 const useRowStyles = makeStyles((theme) => ({
     root: {
@@ -26,6 +28,10 @@ function RegisteredListItem(props) {
     const [expanded, setExpanded] = React.useState(false);
 
     const classes = useRowStyles();
+
+    const dispatch = useDispatch();
+
+    const history = useHistory();
 
     return (
         <React.Fragment>
@@ -88,6 +94,17 @@ function RegisteredListItem(props) {
                                 </Table>
                             </Grid>
                         </Grid>
+                        <Box display="flex" flexDirection="row-reverse">
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                className={classes.button}
+                                endIcon={<Add />}
+                                onClick={() => {
+                                    dispatch(startSession(row.id));
+                                    history.push('/session');
+                                }}>Start session</Button>
+                        </Box>
                     </Collapse>
                 </TableCell>
             </TableRow>

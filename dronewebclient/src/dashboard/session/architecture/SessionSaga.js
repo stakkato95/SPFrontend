@@ -16,10 +16,12 @@ import {
     GET_SESSION_AND_DRONE_AND_ALL_RUNNING_ACTIONS,
     SEND_ACTION,
     LISTEN_ACTION_SSE,
-    LISTEN_SESSION_SSE
+    LISTEN_SESSION_SSE,
+    START_SESSION
 } from './redux/SessionActions';
 
 function* getSessionAndDroneAndRunningActions() {
+    console.log('REQUESTING ALL');
     const state = yield select();
 
     let session = {};
@@ -39,6 +41,8 @@ function* getSessionAndDroneAndRunningActions() {
         console.log(e);
         //ignore
     }
+    console.log('REQUESTING ALL DRONE');
+    console.log(`REQUESTING ALL ${drone}`);
 
     try {
         var serverResult = yield api().get(`/action/getAllRunning/${session.id}`);
@@ -52,20 +56,15 @@ function* getSessionAndDroneAndRunningActions() {
 }
 
 function* sendAction(action) {
-    console.log('SEND');
-
     const state = yield select();
     const sessionId = state.session.session.id;
 
     try {
-        console.log(action);
         const startActionRequest = {
             sessionId: sessionId,
             actionType: action.actionType
         };
-        console.log(startActionRequest);
         var serverResult = yield api().post('/action/start', startActionRequest);
-        console.log(serverResult.data);
     } catch (e) {
         console.log(e);
         //ignore
@@ -76,10 +75,8 @@ function* listenActionSse() {
     const eventSrc = new EventSource('http://localhost:8080/api/action/getUpdates');
     const channel = yield call(getSseChannel, eventSrc);
     while (true) {
-        console.log('STARTED LISTENING ACIONS...');
         const msg = yield take(channel);
         const databaseUpdate = JSON.parse(msg);
-        console.log(databaseUpdate)
         const action = databaseUpdate.object;
         if (action === null) {
             continue;
@@ -109,7 +106,6 @@ function* listenSessionSse() {
         if (session === null) {
             continue;
         }
-        console.log(session);
 
         switch (session.sessionState) {
             case SessionState.RUNNING:
@@ -125,11 +121,25 @@ function* listenSessionSse() {
     }
 }
 
+function* startSession(action) {
+    try {
+        console.log('SESSION_STARTED START');
+        const startSessionRequest = { droneId: action.droneId };
+        var serverResult = yield api().post('/session/startSession', startSessionRequest);
+        console.log('SESSION_STARTED FINISH');
+        console.log(serverResult.data);
+    } catch (e) {
+        console.log(e);
+        //ignore
+    }
+}
+
 export function* sessionSaga() {
     yield all([
         yield takeLatest(GET_SESSION_AND_DRONE_AND_ALL_RUNNING_ACTIONS, getSessionAndDroneAndRunningActions),
         yield takeLatest(SEND_ACTION, sendAction),
         yield takeLatest(LISTEN_ACTION_SSE, listenActionSse),
-        yield takeLatest(LISTEN_SESSION_SSE, listenSessionSse)
+        yield takeLatest(LISTEN_SESSION_SSE, listenSessionSse),
+        yield takeLatest(START_SESSION, startSession)
     ]);
 }
