@@ -48,8 +48,6 @@ function* getSessionInitialState() {
         console.log(e);
         //ignore
     }
-    console.log('RUNNING ACTIONS');
-    console.log(runningActions);
 
     yield put(setSessionInitialState({ session: session, drone: drone, runningActions: runningActions }));
 }
@@ -61,11 +59,9 @@ function* sendAction(action) {
     try {
         const startActionRequest = {
             sessionId: sessionId,
-            // actionType: action.actionType
+            actionType: action.actionType
         };
-        console.log('ACTION ATTEMPT');
         var serverResult = yield api().post('/action/start', startActionRequest);
-        console.log('ACTION SENT');
     } catch (e) {
         console.log(e);
         //ignore

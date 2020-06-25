@@ -16,7 +16,6 @@ export const sessionReducer = (state = sessionInitialState, action) => {
     switch (action.type) {
         case SET_SESSION_INITIAL_STATE:
             const init = action.sessionInitState;
-            console.log(init);
             return Object.assign({}, state, { session: init.session, drone: init.drone, runningActions: init.runningActions });
         case SET_ACTION_RUNNING: {
             //TODO will be used in future, when multiple actions could be sent simultaneously
