@@ -3,13 +3,14 @@ import { api } from '../../../api/ApiConfig';
 import { getSseChannel } from './EventStream';
 import { ActionState } from '../../../model/ActionState';
 import { SessionState } from '../../../model/SessionState';
-import { isEmptyObj } from '../../../helper/CommonHelper';
+import { isEmptyObj, toMillisecondsTime, toShortTime } from '../../../helper/CommonHelper';
 
 import {
     setSessionInitialState,
     setActionRunning,
     setActionFinished,
-    updateSession
+    updateSession,
+    updateDrone
 } from './redux/SessionActions';
 import {
     GET_SESSION_INITIAL_STATE,
@@ -17,7 +18,8 @@ import {
     LISTEN_ACTION_SSE,
     LISTEN_SESSION_SSE,
     START_SESSION,
-    STOP_SESSION
+    STOP_SESSION,
+    LISTEN_DRONE_SSE
 } from './redux/SessionActions';
 
 function* getSessionInitialState() {
@@ -140,6 +142,23 @@ function* stopSession(action) {
     }
 }
 
+function* listenDroneSse() {
+    const eventSrc = new EventSource('http://localhost:8080/api/drone/getUpdates');
+    const channel = yield call(getSseChannel, eventSrc);
+    while (true) {
+        const msg = yield take(channel);
+        const databaseUpdate = JSON.parse(msg);
+        const drone = databaseUpdate.object;
+        if (drone === null) {
+            continue;
+        }
+
+        drone.lastSeenTime = toMillisecondsTime(drone.lastSeenTime);
+        // console.log(toShortTime(drone.lastSeenTime));
+        yield put(updateDrone(drone));
+    }
+}
+
 export function* sessionSaga() {
     yield all([
         yield takeLatest(GET_SESSION_INITIAL_STATE, getSessionInitialState),
@@ -147,6 +166,7 @@ export function* sessionSaga() {
         yield takeLatest(LISTEN_ACTION_SSE, listenActionSse),
         yield takeLatest(LISTEN_SESSION_SSE, listenSessionSse),
         yield takeLatest(START_SESSION, startSession),
-        yield takeLatest(STOP_SESSION, stopSession)
+        yield takeLatest(STOP_SESSION, stopSession),
+        yield takeLatest(LISTEN_DRONE_SSE, listenDroneSse)
     ]);
 }

@@ -34,6 +34,14 @@ class DroneInfo extends React.Component {
                     </ListItemAvatar>
                     <ListItemText primary={this.props.drone.name} secondary="Name" />
                 </ListItem>
+                <ListItem>
+                    <ListItemAvatar>
+                        <Avatar>
+                            <AccountCircle />
+                        </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText primary={this.props.drone.lastSeenTime} secondary="Last ping" />
+                </ListItem>
             </List>
         </>);
     }

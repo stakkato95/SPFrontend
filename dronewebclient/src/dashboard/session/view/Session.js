@@ -22,7 +22,8 @@ import {
     getSessionInitialState,
     listenSessionSse,
     listenActionSse,
-    clearSession
+    clearSession,
+    listenDroneSse
 } from '../architecture/redux/SessionActions';
 import { SessionState } from '../../../model/SessionState';
 
@@ -50,6 +51,7 @@ function Session(props) {
         dispatch(getSessionInitialState());
         dispatch(listenSessionSse());
         dispatch(listenActionSse());
+        dispatch(listenDroneSse());
     }, []);
 
     const onAlertClick = () => {

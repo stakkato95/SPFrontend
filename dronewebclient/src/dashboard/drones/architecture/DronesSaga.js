@@ -15,7 +15,7 @@ import {
 import {
     GET_REGISTERED_DRONES,
     GET_UNREGISTERED_DRONES,
-    REGISTER_DRONE  
+    REGISTER_DRONE
 } from './redux/DroneActions';
 
 function* getRegistered() {
