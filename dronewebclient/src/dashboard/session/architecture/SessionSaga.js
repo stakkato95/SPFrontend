@@ -21,7 +21,6 @@ import {
 } from './redux/SessionActions';
 
 function* getSessionAndDroneAndRunningActions() {
-    console.log('REQUESTING ALL');
     const state = yield select();
 
     let session = {};
@@ -41,8 +40,6 @@ function* getSessionAndDroneAndRunningActions() {
         console.log(e);
         //ignore
     }
-    console.log('REQUESTING ALL DRONE');
-    console.log(`REQUESTING ALL ${drone}`);
 
     try {
         var serverResult = yield api().get(`/action/getAllRunning/${session.id}`);
@@ -123,11 +120,8 @@ function* listenSessionSse() {
 
 function* startSession(action) {
     try {
-        console.log('SESSION_STARTED START');
         const startSessionRequest = { droneId: action.droneId };
         var serverResult = yield api().post('/session/startSession', startSessionRequest);
-        console.log('SESSION_STARTED FINISH');
-        console.log(serverResult.data);
     } catch (e) {
         console.log(e);
         //ignore
