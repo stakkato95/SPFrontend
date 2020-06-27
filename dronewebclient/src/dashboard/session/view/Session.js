@@ -26,6 +26,7 @@ import {
     clearSession,
     listenDroneSse
 } from '../architecture/redux/SessionActions';
+import { listenGnssSse } from '../telemetry/architecture/redux/TelemetryActions';
 import { SessionState } from '../../../model/SessionState';
 
 const useStyles = makeStyles((theme) => ({
@@ -53,6 +54,7 @@ function Session(props) {
         dispatch(listenSessionSse());
         dispatch(listenActionSse());
         dispatch(listenDroneSse());
+        dispatch(listenGnssSse());
     }, []);
 
     const onAlertClick = () => {

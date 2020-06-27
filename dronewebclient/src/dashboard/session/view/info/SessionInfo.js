@@ -61,7 +61,6 @@ function SessionInfo(props) {
                 color="secondary"
                 onClick={() => {
                     dispatch(stopSession(session.id));
-                    console.log('clicked');
                 }}
             >Stop session</Button>
         </Box>
