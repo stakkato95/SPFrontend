@@ -17,6 +17,7 @@ import SessionInfo from './info/SessionInfo';
 import SessionDuration from './info/SessionDuration';
 import Control from './control/Control';
 import SessionAlert from './SessionAlert';
+import Telemetry from '../telemetry/view/Telemetry';
 
 import {
     getSessionInitialState,
@@ -108,6 +109,11 @@ function Session(props) {
             <Grid item xs={12}>
                 <Paper className={classes.paper}>
                     <Control />
+                </Paper>
+            </Grid>
+            <Grid item xs={12}>
+                <Paper className={classes.paper}>
+                    <Telemetry />
                 </Paper>
             </Grid>
         </Grid>
