@@ -42,6 +42,9 @@ const useStyles = makeStyles((theme) => ({
     telemetryTitle: {
         marginLeft: '32px',
         marginTop: '32px'
+    },
+    telemetryChart: {
+        paddingBottom: '32px'
     }
 }));
 
@@ -186,16 +189,14 @@ function Session(props) {
 
                             {section.items.map(subsection => {
                                 return (
-                                    <div>
+                                    <div className={classes.telemetryChart}>
                                         <Typography variant='subtitle1' gutterBottom align='center'>
                                             {subsection.subsectionTitle}
                                         </Typography>
-                                        <Grid item xs={12}>
                                             <Telemetry
                                                 color={subsection.color}
                                                 getData={subsection.getData}
                                                 getTimestamp={subsection.getTimestamp} />
-                                        </Grid>
                                     </div>
                                 );
                             })}
