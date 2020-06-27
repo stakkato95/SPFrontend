@@ -26,7 +26,11 @@ import {
     clearSession,
     listenDroneSse
 } from '../architecture/redux/SessionActions';
-import { listenGnssSse } from '../telemetry/architecture/redux/TelemetryActions';
+import { 
+    listenGnssSse, 
+    listenSpeedSse, 
+    listenRotationSse
+} from '../telemetry/architecture/redux/TelemetryActions';
 import { SessionState } from '../../../model/SessionState';
 
 const useStyles = makeStyles((theme) => ({
@@ -58,10 +62,14 @@ function Session(props) {
 
     useEffect(() => {
         dispatch(getSessionInitialState());
+
         dispatch(listenSessionSse());
         dispatch(listenActionSse());
         dispatch(listenDroneSse());
+
         dispatch(listenGnssSse());
+        dispatch(listenSpeedSse());
+        dispatch(listenRotationSse());
     }, []);
 
     const onAlertClick = () => {
@@ -91,20 +99,20 @@ function Session(props) {
                 {
                     subsectionTitle: 'X-axis',
                     color: '#4cc0c0',
-                    getData: telemetry => telemetry.gnss.alt,
-                    getTimestamp: telemetry => telemetry.gnss.timestamp
+                    getData: telemetry => telemetry.speed.x,
+                    getTimestamp: telemetry => telemetry.speed.timestamp
                 },
                 {
                     subsectionTitle: 'Y-axis',
                     color: '#4cc0c0',
-                    getData: telemetry => telemetry.gnss.alt,
-                    getTimestamp: telemetry => telemetry.gnss.timestamp
+                    getData: telemetry => telemetry.speed.y,
+                    getTimestamp: telemetry => telemetry.speed.timestamp
                 },
                 {
                     subsectionTitle: 'Z-axis',
                     color: '#4cc0c0',
-                    getData: telemetry => telemetry.gnss.alt,
-                    getTimestamp: telemetry => telemetry.gnss.timestamp
+                    getData: telemetry => telemetry.speed.z,
+                    getTimestamp: telemetry => telemetry.speed.timestamp
                 }
             ]
         },
@@ -114,20 +122,20 @@ function Session(props) {
                 {
                     subsectionTitle: 'X-axis',
                     color: '#4cc0c0',
-                    getData: telemetry => telemetry.gnss.alt,
-                    getTimestamp: telemetry => telemetry.gnss.timestamp
+                    getData: telemetry => telemetry.rotation.x,
+                    getTimestamp: telemetry => telemetry.rotation.timestamp
                 },
                 {
                     subsectionTitle: 'Y-axis',
                     color: '#4cc0c0',
-                    getData: telemetry => telemetry.gnss.alt,
-                    getTimestamp: telemetry => telemetry.gnss.timestamp
+                    getData: telemetry => telemetry.rotation.y,
+                    getTimestamp: telemetry => telemetry.rotation.timestamp
                 },
                 {
                     subsectionTitle: 'Z-axis',
                     color: '#4cc0c0',
-                    getData: telemetry => telemetry.gnss.alt,
-                    getTimestamp: telemetry => telemetry.gnss.timestamp
+                    getData: telemetry => telemetry.rotation.z,
+                    getTimestamp: telemetry => telemetry.rotation.timestamp
                 }
             ]
         }

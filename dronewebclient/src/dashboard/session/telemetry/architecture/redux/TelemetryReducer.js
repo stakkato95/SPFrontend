@@ -6,8 +6,8 @@ import {
 
 export const sessionInitialState = {
     gnss: {},
-    rotation: [],
-    speed: []
+    rotation: {},
+    speed: {}
 };
 
 export const telemetryReducer = (state = sessionInitialState, action) => {
@@ -15,13 +15,9 @@ export const telemetryReducer = (state = sessionInitialState, action) => {
         case ADD_GNSS:
             return Object.assign({}, state, { gnss: action.gnss });
         case ADD_ROTATION:
-            let rotationUpdated = state.rotation.slice();
-            rotationUpdated.push(action.rotation);
-            return Object.assign({}, state, { rotation: rotationUpdated });
+            return Object.assign({}, state, { rotation: action.rotation });
         case ADD_SPEED:
-            let speedUpdated = state.speed.slice();
-            speedUpdated.push(action.speed);
-            return Object.assign({}, state, { speed: speedUpdated });
+            return Object.assign({}, state, { speed: action.speed });
     }
     return state;
 };
