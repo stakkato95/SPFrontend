@@ -13,7 +13,7 @@ export const sessionInitialState = {
 export const telemetryReducer = (state = sessionInitialState, action) => {
     switch (action.type) {
         case ADD_GNSS:
-            let gnssUpdated = state.gnss.slice();
+            let gnssUpdated = state.gnss.slice(-14);
             gnssUpdated.push(action.gnss);
             return Object.assign({}, state, { gnss: gnssUpdated });
         case ADD_ROTATION:
