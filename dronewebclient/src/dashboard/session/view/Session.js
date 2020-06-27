@@ -115,7 +115,11 @@ function Session(props) {
             </Grid>
             <Grid item xs={12}>
                 <Paper className={classes.paper}>
-                    <Telemetry />
+                    <Telemetry 
+                    color={'#4cc0c0'} 
+                    label={'Altitude'} 
+                    getData={(telemetry) => telemetry.gnss.alt}
+                    getTimestamp={telemetry => telemetry.gnss.timestamp} />
                 </Paper>
             </Grid>
         </Grid>

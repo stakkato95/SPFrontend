@@ -10,8 +10,8 @@ export function toShortTime(time) {
     return new Date(time).toLocaleString();
 }
 
-export function toMillisecondsTime(time) {
-    return moment(new Date()).format('HH:mm:ss.SSS');
+export function toTimeMillisec(time) {
+    return moment(new Date()).format('HH:mm:ss');
 }
 
 export function getTimeDifference(startTime) {

@@ -1,7 +1,7 @@
 import { all, put, takeLatest, select } from 'redux-saga/effects';
 import { api } from '../../../api/ApiConfig';
 import { ActionState } from '../../../model/ActionState';
-import { isEmptyObj, toMillisecondsTime, listenServerSentEvent } from '../../../helper/CommonHelper';
+import { isEmptyObj, toTimeMillisec, listenServerSentEvent } from '../../../helper/CommonHelper';
 
 import {
     setSessionInitialState,
@@ -113,7 +113,7 @@ function* stopSession(action) {
 
 function* listenDroneSse() {
     yield listenServerSentEvent('/drone/getUpdates', function* (drone) {
-        drone.lastSeenTime = toMillisecondsTime(drone.lastSeenTime);
+        drone.lastSeenTime = toTimeMillisec(drone.lastSeenTime);
         yield put(updateDrone(drone));
     });
 }
