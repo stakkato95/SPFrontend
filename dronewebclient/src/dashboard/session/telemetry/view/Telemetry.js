@@ -63,7 +63,7 @@ const Telemetry = React.memo(function (props) {
     };
 
     return (<div>
-        <Line data={data} options={options} />
+        <Line data={data} options={options} height={80} />
     </div>);
 });
 
