@@ -38,6 +38,10 @@ const useStyles = makeStyles((theme) => ({
     },
     alert: {
         padding: '16px'
+    },
+    telemetryTitle: {
+        marginLeft: '32px',
+        marginTop: '32px'
     }
 }));
 
@@ -66,6 +70,66 @@ function Session(props) {
 
     const { history } = props;
 
+    const telemetrySections = [
+        {
+            sectionTitle: 'Position',
+            items: [
+                {
+                    subsectionTitle: 'Altitude',
+                    color: '#4cc0c0',
+                    getData: telemetry => telemetry.gnss.alt,
+                    getTimestamp: telemetry => telemetry.gnss.timestamp
+                }
+            ]
+        },
+        {
+            sectionTitle: 'Speed',
+            items: [
+                {
+                    subsectionTitle: 'X-axis',
+                    color: '#4cc0c0',
+                    getData: telemetry => telemetry.gnss.alt,
+                    getTimestamp: telemetry => telemetry.gnss.timestamp
+                },
+                {
+                    subsectionTitle: 'Y-axis',
+                    color: '#4cc0c0',
+                    getData: telemetry => telemetry.gnss.alt,
+                    getTimestamp: telemetry => telemetry.gnss.timestamp
+                },
+                {
+                    subsectionTitle: 'Z-axis',
+                    color: '#4cc0c0',
+                    getData: telemetry => telemetry.gnss.alt,
+                    getTimestamp: telemetry => telemetry.gnss.timestamp
+                }
+            ]
+        },
+        {
+            sectionTitle: 'Rotation',
+            items: [
+                {
+                    subsectionTitle: 'X-axis',
+                    color: '#4cc0c0',
+                    getData: telemetry => telemetry.gnss.alt,
+                    getTimestamp: telemetry => telemetry.gnss.timestamp
+                },
+                {
+                    subsectionTitle: 'Y-axis',
+                    color: '#4cc0c0',
+                    getData: telemetry => telemetry.gnss.alt,
+                    getTimestamp: telemetry => telemetry.gnss.timestamp
+                },
+                {
+                    subsectionTitle: 'Z-axis',
+                    color: '#4cc0c0',
+                    getData: telemetry => telemetry.gnss.alt,
+                    getTimestamp: telemetry => telemetry.gnss.timestamp
+                }
+            ]
+        }
+    ];
+
     if (session === null) {
         return (<div>
             <Typography className={classes.emptyText} variant='subtitle1' gutterBottom align='center'>
@@ -84,10 +148,10 @@ function Session(props) {
         }
         {isSessionFinished() &&
             <SessionAlert
-            severity={'success'}
-            onAlertClick={onAlertClick}
-            title={'Session was succesfully finished'}
-            text={<span>You can check information about this session in the <strong>History</strong>!</span>} />
+                severity={'success'}
+                onAlertClick={onAlertClick}
+                title={'Session was succesfully finished'}
+                text={<span>You can check information about this session in the <strong>History</strong>!</span>} />
         }
         <Grid container spacing={3} style={{
             pointerEvents: isSessionRunning() ? 'auto' : 'none',
@@ -113,15 +177,33 @@ function Session(props) {
                     <Control />
                 </Paper>
             </Grid>
-            <Grid item xs={12}>
-                <Paper className={classes.paper}>
-                    <Telemetry 
-                    color={'#4cc0c0'} 
-                    label={'Altitude'} 
-                    getData={(telemetry) => telemetry.gnss.alt}
-                    getTimestamp={telemetry => telemetry.gnss.timestamp} />
-                </Paper>
-            </Grid>
+            <Typography variant="h4" gutterBottom className={classes.telemetryTitle}>Telemetry info</Typography>
+            {telemetrySections.map(section => {
+                return (
+                    <Grid item xs={12}>
+                        <Paper className={classes.paper}>
+                            <Typography variant='h5' gutterBottom>{section.sectionTitle}</Typography>
+
+                            {section.items.map(subsection => {
+                                return (
+                                    <div>
+                                        <Typography variant='subtitle1' gutterBottom align='center'>
+                                            {subsection.subsectionTitle}
+                                        </Typography>
+                                        <Grid item xs={12}>
+                                            <Telemetry
+                                                color={subsection.color}
+                                                getData={subsection.getData}
+                                                getTimestamp={subsection.getTimestamp} />
+                                        </Grid>
+                                    </div>
+                                );
+                            })}
+
+                        </Paper>
+                    </Grid>
+                );
+            })}
         </Grid>
 
     </div>);

@@ -8,7 +8,6 @@ const Telemetry = React.memo(function (props) {
     const store = useStore();
 
     const { color } = props;
-    const { label } = props;
     const { getData } = props;
     const { getTimestamp } = props;
 
@@ -16,7 +15,6 @@ const Telemetry = React.memo(function (props) {
         labels: [],
         datasets: [
             {
-                label: label,
                 fill: false,
                 lineTension: 0.1,
                 borderColor: color,
@@ -30,6 +28,9 @@ const Telemetry = React.memo(function (props) {
     };
 
     const options = {
+        legend: {
+            display: false
+        },
         scales: {
             xAxes: [{
                 type: 'realtime',
