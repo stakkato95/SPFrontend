@@ -18,6 +18,8 @@ import SessionDuration from './info/SessionDuration';
 import Control from './control/Control';
 import SessionAlert from './SessionAlert';
 import Telemetry from '../telemetry/view/Telemetry';
+import MapContainer from './MapContainer';
+
 
 import {
     listenSessionSse,
@@ -72,17 +74,6 @@ function Session(props) {
     const { history } = props;
 
     const telemetrySections = [
-        {
-            sectionTitle: 'Position',
-            items: [
-                {
-                    subsectionTitle: 'Altitude',
-                    color: '#4cc0c0',
-                    getData: telemetry => telemetry.gnss.alt,
-                    getTimestamp: telemetry => telemetry.gnss.timestamp
-                }
-            ]
-        },
         {
             sectionTitle: 'Speed',
             items: [
@@ -179,6 +170,21 @@ function Session(props) {
                 </Paper>
             </Grid>
             <Typography variant="h4" gutterBottom className={classes.telemetryTitle}>Telemetry info</Typography>
+            <Grid item xs={12}>
+                <Paper className={classes.paper}>
+                    <Typography variant='h5' gutterBottom>Position</Typography>
+                        <Typography variant='subtitle1' gutterBottom align='center'>Altitude</Typography>
+                        <Telemetry
+                            color={'#4cc0c0'}
+                            getData={telemetry => telemetry.gnss.alt}
+                            getTimestamp={telemetry => telemetry.gnss.timestamp} />
+                </Paper>
+            </Grid>
+            <Grid item xs={12}>
+                <Paper>
+                    <MapContainer />
+                </Paper>
+            </Grid>
             {telemetrySections.map(section => {
                 return (
                     <Grid item xs={12}>
