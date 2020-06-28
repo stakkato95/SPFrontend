@@ -1,12 +1,12 @@
 import { all, put, takeLatest } from 'redux-saga/effects';
-import { listenServerSentEventNew } from '../../../../helper/CommonHelper';
+import { listenServerSentEvent } from '../../../../helper/CommonHelper';
 import { DatabaseCollections } from '../../../../model/DatabaseCollections';
 
 import { addGnss, addRotation, addSpeed } from './redux/TelemetryActions';
 import { LISTENS_ALL_TELEMETRY_SSE } from './redux/TelemetryActions';
 
 function* listenAllTelemetrySse() {
-    yield listenServerSentEventNew('/telemetry/getUpdates', function* (telemetry) {
+    yield listenServerSentEvent('/telemetry/getUpdates', function* (telemetry) {
         switch (telemetry.collection) {
             case DatabaseCollections.TELEMETRY_GNSS:
                 yield put(addGnss(telemetry.object));
