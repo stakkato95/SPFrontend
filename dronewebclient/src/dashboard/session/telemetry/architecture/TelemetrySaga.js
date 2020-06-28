@@ -1,31 +1,28 @@
-import { all, put, takeLatest, select } from 'redux-saga/effects';
-import { listenServerSentEvent } from '../../../../helper/CommonHelper';
+import { all, put, takeLatest } from 'redux-saga/effects';
+import { listenServerSentEventNew } from '../../../../helper/CommonHelper';
+import { DatabaseCollections } from '../../../../model/DatabaseCollections';
 
 import { addGnss, addRotation, addSpeed } from './redux/TelemetryActions';
-import { LISTEN_GNSS_SSE, LISTEN_ROTATION_SSE, LISTEN_SPEED_SSE } from './redux/TelemetryActions';
+import { LISTENS_ALL_TELEMETRY_SSE } from './redux/TelemetryActions';
 
-function* listenGnssSse() {
-    yield listenServerSentEvent('/telemetry/gnss/getUpdates', function* (gnss) {
-        yield put(addGnss(gnss));
-    });
-}
-
-function* listenRotationSse() {
-    yield listenServerSentEvent('/telemetry/rotation/getUpdates', function* (rotation) {
-        yield put(addRotation(rotation));
-    });
-}
-
-function* listenSpeedSse() {
-    yield listenServerSentEvent('/telemetry/speed/getUpdates', function* (speed) {
-        yield put(addSpeed(speed));
+function* listenAllTelemetrySse() {
+    yield listenServerSentEventNew('/telemetry/getUpdates', function* (telemetry) {
+        switch (telemetry.collection) {
+            case DatabaseCollections.TELEMETRY_GNSS:
+                yield put(addGnss(telemetry.object));
+                break;
+            case DatabaseCollections.TELEMETRY_SPEED:
+                yield put(addSpeed(telemetry.object));
+                break;
+            case DatabaseCollections.TELEMETRY_ROTATION:
+                yield put(addRotation(telemetry.object));
+                break;
+        }
     });
 }
 
 export function* telemetrySaga() {
     yield all([
-        yield takeLatest(LISTEN_GNSS_SSE, listenGnssSse),
-        yield takeLatest(LISTEN_ROTATION_SSE, listenRotationSse),
-        yield takeLatest(LISTEN_SPEED_SSE, listenSpeedSse)
+        yield takeLatest(LISTENS_ALL_TELEMETRY_SSE, listenAllTelemetrySse)
     ]);
 }

@@ -20,17 +20,12 @@ import SessionAlert from './SessionAlert';
 import Telemetry from '../telemetry/view/Telemetry';
 
 import {
-    getSessionInitialState,
     listenSessionSse,
     listenActionSse,
     clearSession,
     listenDroneSse
 } from '../architecture/redux/SessionActions';
-import { 
-    listenGnssSse, 
-    listenSpeedSse, 
-    listenRotationSse
-} from '../telemetry/architecture/redux/TelemetryActions';
+import { listenAllTelemetrySse } from '../telemetry/architecture/redux/TelemetryActions';
 import { SessionState } from '../../../model/SessionState';
 
 const useStyles = makeStyles((theme) => ({
@@ -64,10 +59,7 @@ function Session(props) {
         dispatch(listenSessionSse());
         dispatch(listenActionSse());
         dispatch(listenDroneSse());
-
-        dispatch(listenGnssSse());
-        dispatch(listenSpeedSse());
-        // dispatch(listenRotationSse());
+        dispatch(listenAllTelemetrySse());
     }, []);
 
     const onAlertClick = () => {

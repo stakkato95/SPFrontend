@@ -52,3 +52,19 @@ export function* listenServerSentEvent(path, callback) {
         yield callback(updateObj);
     }
 }
+
+export function* listenServerSentEventNew(path, callback) {
+    const eventSrc = new EventSource(`http://localhost:8080/api${path}`);
+    const channel = yield call(getSseChannel, eventSrc);
+
+    while (true) {
+        const msg = yield take(channel);
+        const databaseUpdate = JSON.parse(msg);
+        const updateObj = databaseUpdate;
+        if (updateObj === null) {
+            continue;
+        }
+        
+        yield callback(updateObj);
+    }
+}
