@@ -16,7 +16,6 @@ export const telemetryReducer = (state = sessionInitialState, action) => {
         case ADD_GNSS:
             let markers = state.markers.slice();
             markers.push({ lat: action.gnss.lat, lon: action.gnss.lon });
-            console.log(markers.length);
             return Object.assign({}, state, { gnss: action.gnss, markers: markers });
         case ADD_ROTATION:
             return Object.assign({}, state, { rotation: action.rotation });
