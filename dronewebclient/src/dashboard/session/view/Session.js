@@ -61,15 +61,13 @@ function Session(props) {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getSessionInitialState());
-
         dispatch(listenSessionSse());
         dispatch(listenActionSse());
         dispatch(listenDroneSse());
 
         dispatch(listenGnssSse());
         dispatch(listenSpeedSse());
-        dispatch(listenRotationSse());
+        // dispatch(listenRotationSse());
     }, []);
 
     const onAlertClick = () => {
