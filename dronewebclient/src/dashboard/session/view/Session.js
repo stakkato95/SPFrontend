@@ -18,7 +18,7 @@ import SessionDuration from './info/SessionDuration';
 import Control from './control/Control';
 import SessionAlert from './SessionAlert';
 import Telemetry from '../telemetry/view/Telemetry';
-import MapContainer from './MapContainer';
+import MapContainer from './map/MapContainer';
 
 
 import {

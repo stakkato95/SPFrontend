@@ -7,13 +7,17 @@ import {
 export const sessionInitialState = {
     gnss: {},
     rotation: {},
-    speed: {}
+    speed: {},
+    markers: []
 };
 
 export const telemetryReducer = (state = sessionInitialState, action) => {
     switch (action.type) {
         case ADD_GNSS:
-            return Object.assign({}, state, { gnss: action.gnss });
+            let markers = state.markers.slice();
+            markers.push({ lat: action.gnss.lat, lon: action.gnss.lon });
+            console.log(markers.length);
+            return Object.assign({}, state, { gnss: action.gnss, markers: markers });
         case ADD_ROTATION:
             return Object.assign({}, state, { rotation: action.rotation });
         case ADD_SPEED:
