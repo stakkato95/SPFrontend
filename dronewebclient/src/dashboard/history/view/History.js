@@ -18,7 +18,7 @@ import { getHistory } from '../architecture/redux/HistoryActions';
 
 // import PropTypes from 'prop-types';
 
-// import UnregisteredListItem from '../list/UnregisteredListItem';
+import HistoryListItem from './HistoryListItem';
 
 const useStyles = makeStyles({
     table: {
@@ -58,19 +58,19 @@ function History() {
                     <TableRow>
                         <TableCell />
                         <TableCell>Id</TableCell>
-                        <TableCell align="right">Id</TableCell>
+                        <TableCell align="right">Drone Id</TableCell>
                         <TableCell align="right">Drone name</TableCell>
                         <TableCell align="right">Start time</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {history.map(item => {
+                    {/* {history.map(item => {
                         return (<p>{item.session.id}</p>)
-                    })}
+                    })} */}
 
-                    {/* {this.props.unregisteredDrones.map((row) => (
-                        <UnregisteredListItem key={row.id} row={row} />
-                    ))} */}
+                    {history.map((row) => (
+                        <HistoryListItem key={row.session.id} row={row} />
+                    ))}
                 </TableBody>
             </Table>
         </TableContainer>
