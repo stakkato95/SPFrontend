@@ -32,7 +32,7 @@ function* getSessionInitialState() {
     try {
         var serverResult = yield api().get('/session/getRunning');
         session = serverResult.data.payload;
-        session.sessionStartTime = toShortTime(session.sessionStartTime)
+        session.sessionStartTime = toShortTime(session.sessionStartTime);
     } catch (e) {
         console.log(e);
         //ignore
@@ -120,7 +120,6 @@ function* stopSession(action) {
 
 function* listenDroneSse() {
     yield listenServerSentEventResult('/drone/getUpdates', function* (drone) {
-        console.log(drone);
         drone.lastSeenTime = toTimeMillisec(drone.lastSeenTime);
         yield put(updateDrone(drone));
     });

@@ -22,6 +22,7 @@ import MapContainer from './map/MapContainer';
 
 
 import {
+    getSessionInitialState,
     listenSessionSse,
     listenActionSse,
     clearSession,
@@ -58,10 +59,16 @@ function Session(props) {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(listenSessionSse());
-        dispatch(listenActionSse());
-        dispatch(listenDroneSse());
-        dispatch(listenAllTelemetrySse());
+        dispatch(getSessionInitialState());
+
+        setTimeout(() => {
+            //TODO receive all actions from a single source
+            //too many simultaneous connections from this app
+            dispatch(listenSessionSse());
+            dispatch(listenActionSse());
+            // dispatch(listenDroneSse());
+            dispatch(listenAllTelemetrySse());
+        }, 1000);
     }, []);
 
     const onAlertClick = () => {
@@ -173,11 +180,11 @@ function Session(props) {
             <Grid item xs={12}>
                 <Paper className={classes.paper}>
                     <Typography variant='h5' gutterBottom>Position</Typography>
-                        <Typography variant='subtitle1' gutterBottom align='center'>Altitude</Typography>
-                        <Telemetry
-                            color={'#4cc0c0'}
-                            getData={telemetry => telemetry.gnss.alt}
-                            getTimestamp={telemetry => telemetry.gnss.timestamp} />
+                    <Typography variant='subtitle1' gutterBottom align='center'>Altitude</Typography>
+                    <Telemetry
+                        color={'#4cc0c0'}
+                        getData={telemetry => telemetry.gnss.alt}
+                        getTimestamp={telemetry => telemetry.gnss.timestamp} />
                 </Paper>
             </Grid>
             <Grid item xs={12}>
@@ -197,10 +204,10 @@ function Session(props) {
                                         <Typography variant='subtitle1' gutterBottom align='center'>
                                             {subsection.subsectionTitle}
                                         </Typography>
-                                            <Telemetry
-                                                color={subsection.color}
-                                                getData={subsection.getData}
-                                                getTimestamp={subsection.getTimestamp} />
+                                        <Telemetry
+                                            color={subsection.color}
+                                            getData={subsection.getData}
+                                            getTimestamp={subsection.getTimestamp} />
                                     </div>
                                 );
                             })}
