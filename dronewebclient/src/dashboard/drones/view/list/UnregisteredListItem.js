@@ -7,8 +7,8 @@ import { KeyboardArrowDown, KeyboardArrowUp, Add } from '@material-ui/icons';
 
 import { connect } from 'react-redux';
 
-import { 
-    setRegisterDroneDialogVisible, 
+import {
+    setRegisterDroneDialogVisible,
     setSelectedUnregisteredDroneId
 } from '../../architecture/redux/DroneActions';
 
@@ -56,41 +56,41 @@ function UnregisteredListItem(props) {
                             <Typography variant="h6" gutterBottom component="div">
                                 Additional information
                             </Typography>
-                                <Table className={classes.table} size="small" aria-label="a dense table">
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell>Parameter</TableCell>
-                                            <TableCell align="right">Value</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        <TableRow key="id">
-                                            <TableCell component="th" scope="row">Id</TableCell>
-                                            <TableCell align="right">{row.id}</TableCell>
-                                        </TableRow>
-                                        <TableRow key="ip">
-                                            <TableCell component="th" scope="row">IP</TableCell>
-                                            <TableCell align="right">{row.ip}</TableCell>
-                                        </TableRow>
-                                        <TableRow key="lat">
-                                            <TableCell component="th" scope="row">Latitude</TableCell>
-                                            <TableCell align="right">{row.position.lat}</TableCell>
-                                        </TableRow>
-                                        <TableRow key="lon">
-                                            <TableCell component="th" scope="row">Longitude</TableCell>
-                                            <TableCell align="right">{row.position.lon}</TableCell>
-                                        </TableRow>
-                                        <TableRow key="alt">
-                                            <TableCell component="th" scope="row">Altitude</TableCell>
-                                            <TableCell align="right">{row.position.alt}</TableCell>
-                                        </TableRow>
-                                    </TableBody>
-                                </Table>
+                            <Table className={classes.table} size="small" aria-label="a dense table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Parameter</TableCell>
+                                        <TableCell align="right">Value</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    <TableRow key="id">
+                                        <TableCell component="th" scope="row">Id</TableCell>
+                                        <TableCell align="right">{row.id}</TableCell>
+                                    </TableRow>
+                                    <TableRow key="ip">
+                                        <TableCell component="th" scope="row">IP</TableCell>
+                                        <TableCell align="right">{row.ip}</TableCell>
+                                    </TableRow>
+                                    <TableRow key="lat">
+                                        <TableCell component="th" scope="row">Latitude</TableCell>
+                                        <TableCell align="right">{row.position.lat}</TableCell>
+                                    </TableRow>
+                                    <TableRow key="lon">
+                                        <TableCell component="th" scope="row">Longitude</TableCell>
+                                        <TableCell align="right">{row.position.lon}</TableCell>
+                                    </TableRow>
+                                    <TableRow key="alt">
+                                        <TableCell component="th" scope="row">Altitude</TableCell>
+                                        <TableCell align="right">{row.position.alt}</TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
                             <Box display="flex" flexDirection="row-reverse">
-                                <Button 
-                                    variant="outlined" 
-                                    color="primary" 
-                                    className={classes.button} 
+                                <Button
+                                    variant="outlined"
+                                    color="primary"
+                                    className={classes.button}
                                     endIcon={<Add />}
                                     onClick={() => {
                                         props.setRegisterDroneDialogVisible(true);
