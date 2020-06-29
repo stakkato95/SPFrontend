@@ -86,19 +86,16 @@ function Session(props) {
             items: [
                 {
                     subsectionTitle: 'X-axis',
-                    color: '#4cc0c0',
                     getData: telemetry => telemetry.speed.x,
                     getTimestamp: telemetry => telemetry.speed.timestamp
                 },
                 {
                     subsectionTitle: 'Y-axis',
-                    color: '#4cc0c0',
                     getData: telemetry => telemetry.speed.y,
                     getTimestamp: telemetry => telemetry.speed.timestamp
                 },
                 {
                     subsectionTitle: 'Z-axis',
-                    color: '#4cc0c0',
                     getData: telemetry => telemetry.speed.z,
                     getTimestamp: telemetry => telemetry.speed.timestamp
                 }
@@ -109,19 +106,16 @@ function Session(props) {
             items: [
                 {
                     subsectionTitle: 'X-axis',
-                    color: '#4cc0c0',
                     getData: telemetry => telemetry.rotation.x,
                     getTimestamp: telemetry => telemetry.rotation.timestamp
                 },
                 {
                     subsectionTitle: 'Y-axis',
-                    color: '#4cc0c0',
                     getData: telemetry => telemetry.rotation.y,
                     getTimestamp: telemetry => telemetry.rotation.timestamp
                 },
                 {
                     subsectionTitle: 'Z-axis',
-                    color: '#4cc0c0',
                     getData: telemetry => telemetry.rotation.z,
                     getTimestamp: telemetry => telemetry.rotation.timestamp
                 }
@@ -182,7 +176,6 @@ function Session(props) {
                     <Typography variant='h5' gutterBottom>Position</Typography>
                     <Typography variant='subtitle1' gutterBottom align='center'>Altitude</Typography>
                     <Telemetry
-                        color={'#4cc0c0'}
                         getData={telemetry => telemetry.gnss.alt}
                         getTimestamp={telemetry => telemetry.gnss.timestamp} />
                 </Paper>

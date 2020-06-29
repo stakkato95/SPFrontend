@@ -7,7 +7,6 @@ import 'chartjs-plugin-streaming';
 const Telemetry = React.memo(function (props) {
     const store = useStore();
 
-    const { color } = props;
     const { getData } = props;
     const { getTimestamp } = props;
 
@@ -17,9 +16,9 @@ const Telemetry = React.memo(function (props) {
             {
                 fill: false,
                 lineTension: 0.1,
-                borderColor: color,
+                borderColor: '#3f51b5',
                 pointHoverRadius: 10,
-                pointHoverBackgroundColor: color,
+                pointHoverBackgroundColor: '#3f51b5',
                 pointHoverBorderWidth: 2,
                 pointRadius: 5,
                 data: []

@@ -9,9 +9,9 @@ export default function MapContainer() {
   const [viewport, setViewport] = useState({
     width: '100%',
     height: 400,
-    latitude: 48.3824647,
-    longitude: 14.4801307,
-    zoom: 8
+    latitude: 48.3721216,
+    longitude: 14.5195008,
+    zoom: 16
   });
 
   const navStyle = {
