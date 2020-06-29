@@ -2,6 +2,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { droneReducer } from '../dashboard/drones/architecture/redux/DroneReducer';
 import { sessionReducer } from '../dashboard/session/architecture/redux/SessionReducer';
 import { telemetryReducer } from '../dashboard/session/telemetry/architecture/redux/TelemetryReducer';
+import { historyReducer } from '../dashboard/history/architecture/redux/HistoryReducer';
 
 import createSagaMiddleware from 'redux-saga';
 
@@ -13,7 +14,8 @@ export const ConfigureStore = () => {
     const reducers = combineReducers({
         drone: droneReducer,
         session: sessionReducer,
-        telemetry: telemetryReducer
+        telemetry: telemetryReducer,
+        history: historyReducer
     });
 
     const store = createStore(reducers, applyMiddleware(sagaMiddleware));

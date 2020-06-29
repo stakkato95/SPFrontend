@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -14,7 +14,7 @@ import {
     Typography
 } from '@material-ui/core';
 
-// import { getUnregisteredDrones } from '../../architecture/redux/DroneActions';
+import { getHistory } from '../architecture/redux/HistoryActions';
 
 // import PropTypes from 'prop-types';
 
@@ -31,11 +31,15 @@ const useStyles = makeStyles({
 });
 
 function History() {
-    // const history = useSelector(state => state.history.history);
-
+    const history = useSelector(state => state.history.history);
     const classes = useStyles();
+    const dispatch = useDispatch();
 
-    if (true/*history.length === 0*/) {
+    useEffect(() => {
+        dispatch(getHistory());
+    });
+
+    if (history.length === 0) {
         return (<Typography
             gutterBottom
             variant='subtitle1'
@@ -60,6 +64,10 @@ function History() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
+                    {history.map(item => {
+                        return (<p>{item.session.id}</p>)
+                    })}
+
                     {/* {this.props.unregisteredDrones.map((row) => (
                         <UnregisteredListItem key={row.id} row={row} />
                     ))} */}
