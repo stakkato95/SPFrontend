@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import ReactMapGL from 'react-map-gl';
+import ReactMapGL, { NavigationControl } from 'react-map-gl';
 import Pin from './Pin';
 
 export default function MapContainer() {
@@ -13,6 +13,13 @@ export default function MapContainer() {
     longitude: 14.4801307,
     zoom: 8
   });
+
+  const navStyle = {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    padding: '10px'
+  };
 
   const markers = useSelector(state => state.telemetry.markers);
 
@@ -25,6 +32,11 @@ export default function MapContainer() {
       {markers.map((marker, i) => {
         return (<Pin data={{ index: i, lat: marker.lat, lon: marker.lon }} />);
       })}
+
+      <div style={navStyle}>
+        <NavigationControl />
+      </div>
+
     </ReactMapGL>
   );
 }
