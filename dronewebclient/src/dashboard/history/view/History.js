@@ -1,0 +1,72 @@
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { makeStyles } from '@material-ui/core/styles';
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Paper,
+    Container,
+    Typography
+} from '@material-ui/core';
+
+// import { getUnregisteredDrones } from '../../architecture/redux/DroneActions';
+
+// import PropTypes from 'prop-types';
+
+// import UnregisteredListItem from '../list/UnregisteredListItem';
+
+const useStyles = makeStyles({
+    table: {
+        marginTop: '8px'
+    },
+    container: {
+        padding: '2px',
+        position: 'relative'
+    }
+});
+
+function History() {
+    // const history = useSelector(state => state.history.history);
+
+    const classes = useStyles();
+
+    if (true/*history.length === 0*/) {
+        return (<Typography
+            gutterBottom
+            variant='subtitle1'
+            align='center'
+            style={{ marginTop: '16px' }}>
+            No sessions in history.
+        </Typography>);
+    }
+
+    return (<Container className={classes.container} >
+        <TableContainer
+            component={Paper}
+            className={classes.table}>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell />
+                        <TableCell>Id</TableCell>
+                        <TableCell align="right">Id</TableCell>
+                        <TableCell align="right">Drone name</TableCell>
+                        <TableCell align="right">Start time</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {/* {this.props.unregisteredDrones.map((row) => (
+                        <UnregisteredListItem key={row.id} row={row} />
+                    ))} */}
+                </TableBody>
+            </Table>
+        </TableContainer>
+    </Container>);
+}
+
+export default History;

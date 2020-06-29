@@ -25,14 +25,14 @@ import {
   Notifications,
   Contactless,
   SettingsEthernet,
-  History
+  History as HistoryIcon
 } from '@material-ui/icons';
 
 import { getSessionInitialState } from './session/architecture/redux/SessionActions';
 
 import Drones from './drones/view/Drones';
 import Session from './session/view/Session';
-
+import History from './history/view/History';
 
 const drawerWidth = 240;
 
@@ -149,7 +149,7 @@ function Dashboard(props) {
     },
     {
       text: 'History',
-      icon: <History />,
+      icon: <HistoryIcon />,
       onClick: () => history.push('/history')
     }
   ];
@@ -211,7 +211,7 @@ function Dashboard(props) {
 
             <Route exact from="/drones/:tab?" render={props => <Drones {...props} />} />
             <Route exact path="/session" render={props => <Session {...props} />} />
-            <Route exact path="/history" render={props => <Drones {...props} />} />
+            <Route exact path="/history" render={props => <History {...props} />} />
           </Switch>
           {/* <Box pt={4}>
             <Copyright />
