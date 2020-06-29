@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { Typography, List, ListItem, ListItemText, ListItemAvatar, Avatar } from '@material-ui/core';
-import { Memory, SettingsEthernet, AccountCircle } from '@material-ui/icons';
+import { Memory, SettingsEthernet, AccountCircle, Timelapse } from '@material-ui/icons';
 
 class DroneInfo extends React.Component {
 
@@ -37,7 +37,7 @@ class DroneInfo extends React.Component {
                 <ListItem>
                     <ListItemAvatar>
                         <Avatar>
-                            <AccountCircle />
+                            <Timelapse />
                         </Avatar>
                     </ListItemAvatar>
                     <ListItemText primary={this.props.drone.lastSeenTime} secondary="Last ping" />
